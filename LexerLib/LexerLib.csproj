@@ -43,8 +43,16 @@
   <ItemGroup>
     <Compile Include="IRule.cs" />
     <Compile Include="Predicates\AnyCharacter.cs" />
+    <Compile Include="Predicates\IOr.cs" />
+    <Compile Include="Predicates\IZeroOrMoreTimes.cs" />
+    <Compile Include="Predicates\Or.cs" />
+    <Compile Include="Predicates\ZeroOrMoreTimes.cs" />
+    <Compile Include="Predicates\Perhaps.cs" />
     <Compile Include="Predicates\IAnyCharacter.cs" />
+    <Compile Include="Predicates\IPerhaps.cs" />
+    <Compile Include="Predicates\IOneOrMoreTimes.cs" />
     <Compile Include="Predicates\PredicateExtensions.cs" />
+    <Compile Include="Predicates\OneOrMoreTimes.cs" />
     <Compile Include="Predicates\Sequence.cs" />
     <Compile Include="Predicates\Character.cs" />
     <Compile Include="Predicates\ISequence.cs" />
