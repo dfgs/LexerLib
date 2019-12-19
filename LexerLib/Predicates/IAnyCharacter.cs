@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LexerLib.Predicates
 {
-	public interface IAnyCharacter:IPredicate
+	public interface IAnyCharacter:IShiftPredicate
 	{
 		
 	}

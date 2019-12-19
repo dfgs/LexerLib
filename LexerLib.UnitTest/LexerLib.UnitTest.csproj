@@ -51,7 +51,7 @@
   <ItemGroup>
     <Compile Include="CharacterUnitTest.cs" />
     <Compile Include="PredicateExtensionsUnitTest.cs" />
-    <Compile Include="PredicateUnitTest.cs" />
+    <Compile Include="ParseUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

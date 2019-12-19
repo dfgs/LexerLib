@@ -44,8 +44,11 @@
     <Compile Include="IRule.cs" />
     <Compile Include="Predicates\AnyCharacter.cs" />
     <Compile Include="Predicates\IOr.cs" />
+    <Compile Include="Predicates\IShiftPredicate.cs" />
     <Compile Include="Predicates\IZeroOrMoreTimes.cs" />
     <Compile Include="Predicates\Or.cs" />
+    <Compile Include="Predicates\Parse.cs" />
+    <Compile Include="Predicates\ShiftPredicate.cs" />
     <Compile Include="Predicates\ZeroOrMoreTimes.cs" />
     <Compile Include="Predicates\Perhaps.cs" />
     <Compile Include="Predicates\IAnyCharacter.cs" />
@@ -61,6 +64,16 @@
     <Compile Include="Predicates\Predicate.cs" />
     <Compile Include="Rule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Situations\ISituation.cs" />
+    <Compile Include="Situations\ISituationFactory.cs" />
+    <Compile Include="Situations\Situation.cs" />
+    <Compile Include="Situations\SituationFactory.cs" />
+    <Compile Include="Transitions\BaseTransition.cs" />
+    <Compile Include="Transitions\IShiftTransition.cs" />
+    <Compile Include="Transitions\IReductionTransition.cs" />
+    <Compile Include="Transitions\ITransition.cs" />
+    <Compile Include="Transitions\ShiftTransition.cs" />
+    <Compile Include="Transitions\ReductionTransition.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LexerLib.Predicates
 {
-	public class Character : Predicate, ICharacter
+	public class Character : ShiftPredicate, ICharacter
 	{
 		char ICharacter.Value => Value;
 		public char Value

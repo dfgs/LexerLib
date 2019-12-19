@@ -4,13 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LexerLib.Predicates
+namespace LexerLib.Transitions
 {
-	public interface ICharacter:IShiftPredicate
+	public class ReductionTransition:BaseTransition,IReductionTransition
 	{
-		char Value
-		{
-			get;
-		}
 	}
 }

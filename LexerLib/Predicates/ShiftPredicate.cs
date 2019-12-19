@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace LexerLib.Predicates
 {
-	public interface ICharacter:IShiftPredicate
+	public abstract class ShiftPredicate:Predicate,IShiftPredicate
 	{
-		char Value
-		{
-			get;
-		}
+
+
 	}
 }
