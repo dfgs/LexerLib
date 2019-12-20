@@ -26,6 +26,11 @@ namespace LexerLib
         {
 
         }
-        
+        public Rule(string Name,Predicate Predicate)
+        {
+            this.Name = Name;
+            this.Predicate = Predicate;
+        }
+
     }
 }

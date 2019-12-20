@@ -28,7 +28,23 @@ namespace LexerLib.UnitTest.Automatons
 
 
 		}
+		[TestMethod]
+		public void ShouldCreateReduction()
+		{
+			State state;
+			
 
+			state = new State();
+
+			Assert.AreEqual(0, state.Reductions.Count()); ;
+			state.CreateReduction("A");
+			Assert.AreEqual(1, state.Reductions.Count()); ;
+			state.CreateReduction("B");
+			Assert.AreEqual(2, state.Reductions.Count()); ;
+
+
+
+		}
 
 
 

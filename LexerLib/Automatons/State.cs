@@ -10,14 +10,27 @@ namespace LexerLib.Automatons
 	{
 		private int?[] indices;
 
+		private List<string> reductions;
+		public IEnumerable<string> Reductions
+		{
+			get => reductions;
+		}
+
+
 		public State()
 		{
 			indices = new int?[65535];
+			reductions = new List<string>();
 		}
+
 
 		public void CreateShift(char Input, int NextStateIndex)
 		{
 			indices[Input] = NextStateIndex;
+		}
+		public void CreateReduction(string Reduction)
+		{
+			reductions.Add(Reduction);
 		}
 
 		public int? GetNextStateIndex(char Input)
@@ -25,7 +38,7 @@ namespace LexerLib.Automatons
 			return indices[Input];
 		}
 
-		public IEnumerable<string> GetValidShifts()
+		public IEnumerable<string> DumpValidShifts()
 		{
 			int? index;
 			for(char c=char.MinValue;c<char.MaxValue;c++)
@@ -35,6 +48,8 @@ namespace LexerLib.Automatons
 				yield return $"{c}->{index.Value}";
 			}
 		}
+		
 
+		
 	}
 }

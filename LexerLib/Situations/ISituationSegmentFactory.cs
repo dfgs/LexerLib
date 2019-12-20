@@ -10,7 +10,7 @@ namespace LexerLib.Situations
 {
 	public interface ISituationSegmentFactory
 	{
-		ISituation BuildRootSituation(params IPredicate[] Predicates);
+		ISituation BuildRootSituation(params IRule[] Rules);
 		ISituationSegment BuildSituationSegment(IPredicate Predicate, ISituationSegment NextSegment);
 
 

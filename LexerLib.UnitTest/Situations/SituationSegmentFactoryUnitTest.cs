@@ -41,14 +41,14 @@ namespace LexerLib.UnitTest.Situations
 		[TestMethod]
 		public void ShouldBuildRootSituation()
 		{
-			IPredicate predicate;
+			IRule rule;
 			ISituation situation;
 			ISituationSegmentFactory factory;
 
-			predicate = Parse.Character('a');
+			rule =new Rule("A", Parse.Character('a'));
 
 			factory = new SituationSegmentFactory();
-			situation=factory.BuildRootSituation(predicate);
+			situation=factory.BuildRootSituation(rule);
 			Assert.IsNotNull(situation);
 			Assert.IsTrue(ParseSegment(situation.Transitions, typeof(Character)));
 

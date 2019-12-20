@@ -11,7 +11,7 @@ namespace LexerLib.UnitTest.Automatons
 	public class AutomatonTableFactoryUnitTest
 	{
 
-		private bool ParseStates(State[] States,params char[] Inputs)
+		private string ParseStates(State[] States,params char[] Inputs)
 		{
 			State currentState;
 			int? nextIndex;
@@ -24,7 +24,7 @@ namespace LexerLib.UnitTest.Automatons
 				currentState = States[nextIndex.Value];
 			}
 
-			return true;
+			return currentState.Reductions.FirstOrDefault();
 		}
 
 		[TestMethod]
@@ -50,15 +50,16 @@ namespace LexerLib.UnitTest.Automatons
 			segmentFactory = new SituationSegmentFactory();
 
 			rootSituation = segmentFactory.BuildRootSituation( 
-				Parse.Character('a').ThenCharacter('b').ThenCharacter('c') , Parse.Character('a').ThenCharacter('b').ThenAnyCharacter()
+				new Rule("A",Parse.Character('a').ThenCharacter('b').ThenCharacter('c') ),
+				new Rule("B", Parse.Character('a').ThenCharacter('b').ThenAnyCharacter())
 				);
 
 			factory = new AutomatonTableFactory();
 			states=factory.BuildStates(rootSituation);
 
 			Assert.AreEqual(5,states.Length);
-			Assert.IsTrue(ParseStates(states, 'a', 'b', 'c'));
-			Assert.IsTrue(ParseStates(states, 'a', 'b', 'd'));
+			Assert.AreEqual("A",ParseStates(states, 'a', 'b', 'c'));
+			Assert.AreEqual("B", ParseStates(states, 'a', 'b', 'd'));
 		}
 
 		[TestMethod]
@@ -73,16 +74,17 @@ namespace LexerLib.UnitTest.Automatons
 			segmentFactory = new SituationSegmentFactory();
 
 			rootSituation = segmentFactory.BuildRootSituation(
-				Parse.Character('a').Then(Parse.Character('b').OneOrMoreTimes()).ThenCharacter('c'), Parse.Character('a').ThenCharacter('b').ThenCharacter('e')
+				new Rule("A", Parse.Character('a').Then(Parse.Character('b').OneOrMoreTimes()).ThenCharacter('c')),
+				new Rule("B", Parse.Character('a').ThenCharacter('b').ThenCharacter('e'))
 				);
 
 			factory = new AutomatonTableFactory();
 			states = factory.BuildStates(rootSituation);
 
 			Assert.AreEqual(6, states.Length);
-			Assert.IsTrue(ParseStates(states, 'a', 'b', 'b', 'b', 'c'));
+			Assert.AreEqual("A", ParseStates(states, 'a', 'b', 'b', 'b', 'c'));
 			Assert.ThrowsException<InvalidOperationException>(()=>ParseStates(states, 'a', 'b', 'b', 'b', 'e'));
-			Assert.IsTrue(ParseStates(states, 'a', 'b', 'e'));
+			Assert.AreEqual("B", ParseStates(states, 'a', 'b', 'e'));
 		}
 
 		[TestMethod]
@@ -97,17 +99,18 @@ namespace LexerLib.UnitTest.Automatons
 			segmentFactory = new SituationSegmentFactory();
 
 			rootSituation = segmentFactory.BuildRootSituation(
-				Parse.Character('a').Then(Parse.Character('b').ThenCharacter('b').ThenCharacter('b').Perhaps()).ThenCharacter('c'), Parse.Character('a').ThenCharacter('b').ThenCharacter('e')
+				new Rule("A", Parse.Character('a').Then(Parse.Character('b').ThenCharacter('b').ThenCharacter('b').Perhaps()).ThenCharacter('c')),
+				new Rule("B", Parse.Character('a').ThenCharacter('b').ThenCharacter('e'))
 				);
 
 			factory = new AutomatonTableFactory();
 			states = factory.BuildStates(rootSituation);
 
 			Assert.AreEqual(7, states.Length);
-			Assert.IsTrue(ParseStates(states, 'a', 'b', 'b', 'b', 'c'));
-			Assert.IsTrue(ParseStates(states, 'a', 'c'));
+			Assert.AreEqual("A", ParseStates(states, 'a', 'b', 'b', 'b', 'c'));
+			Assert.AreEqual("A", ParseStates(states, 'a', 'c'));
 			Assert.ThrowsException<InvalidOperationException>(() => ParseStates(states, 'a', 'b', 'b', 'b', 'e'));
-			Assert.IsTrue(ParseStates(states, 'a', 'b', 'e'));
+			Assert.AreEqual("B", ParseStates(states, 'a', 'b', 'e'));
 		}
 
 	}

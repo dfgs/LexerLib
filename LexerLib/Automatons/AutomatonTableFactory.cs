@@ -64,10 +64,17 @@ namespace LexerLib.Automatons
 					nextSituations = new List<ISituation>();
 					foreach (ISituation situation in currentSituationCollection.Items)
 					{
-						foreach (IShiftTransition transition in situation.Transitions.OfType<IShiftTransition>())
+						foreach (ITransition transition in situation.Transitions)
 						{
-							if (!transition.Predicate.Accept(input)) continue;
-							nextSituations.Add(transition.TargetSituation);
+							if (transition is IReductionTransition reductionTransition)
+							{
+								currentSituationCollection.State.CreateReduction(reductionTransition.Name);
+								continue;
+							}
+							if (transition is IShiftTransition shiftTransition)
+							{
+								if (shiftTransition.Predicate.Accept(input)) nextSituations.Add(shiftTransition.TargetSituation);
+							}
 						}
 					}
 					if (nextSituations.Count == 0) continue;
