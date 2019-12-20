@@ -8,5 +8,6 @@ namespace LexerLib.Transitions
 {
 	public interface ITransition
 	{
+		
 	}
 }

@@ -76,9 +76,6 @@ namespace LexerLib.Situations
 			ShiftTransition transition;
 			SituationSegment result;
 
-			if (Predicate == null) throw new ArgumentNullException("Predicate");
-			if (NextSegment == null) throw new ArgumentNullException("NextSegment");
-
 			situation = new Situation();
 			situation.Transitions.AddRange(NextSegment.InputTransitions);
 
@@ -99,23 +96,14 @@ namespace LexerLib.Situations
 			ISituationSegment lastSegment;
 			SituationSegment result;
 
-			if (Predicate == null) throw new ArgumentNullException("Predicate");
-			if (NextSegment == null) throw new ArgumentNullException("NextSegment");
-
-			if (!Predicate.Items.Any())
-			{
-				result = new SituationSegment();
-				result.InputTransitions.AddRange(NextSegment.InputTransitions);
-				result.OutputSituations.AddRange(NextSegment.OutputSituations);
-
-				return result;
-			}
+			if ((Predicate.Items == null) || (!Predicate.Items.Any())) throw new InvalidOperationException("Invalid sequence predicate");
+			
 
 			lastSegment = NextSegment;
 			predicates = Predicate.Items.ToArray();
 			segments = new SituationSegment[predicates.Length];
 
-			for(int t=predicates.Length-1;t>0;t--)
+			for(int t=predicates.Length-1;t>=0;t--)
 			{
 				segments[t] = BuildSituationSegment(predicates[t], lastSegment);
 				lastSegment = segments[t];
@@ -133,8 +121,7 @@ namespace LexerLib.Situations
 			List<ISituationSegment> segments;
 			SituationSegment result;
 
-			if (Predicate == null) throw new ArgumentNullException("Predicate");
-			if (NextSegment == null) throw new ArgumentNullException("NextSegment");
+			if ((Predicate.Items == null) || (!Predicate.Items.Any())) throw new InvalidOperationException("Invalid or predicate");
 
 			segments = new List<ISituationSegment>();
 			foreach (IPredicate item in Predicate.Items)
@@ -153,8 +140,7 @@ namespace LexerLib.Situations
 		{
 			SituationSegment result;
 
-			if (Predicate == null) throw new ArgumentNullException("Predicate");
-			if (NextSegment == null) throw new ArgumentNullException("NextSegment");
+			if (Predicate.Item == null)  throw new InvalidOperationException("Invalid perhaps predicate");
 
 			result = BuildSituationSegment(Predicate.Item, NextSegment);
 			result.InputTransitions.AddRange(NextSegment.InputTransitions);
@@ -167,8 +153,7 @@ namespace LexerLib.Situations
 		{
 			SituationSegment result;
 
-			if (Predicate == null) throw new ArgumentNullException("Predicate");
-			if (NextSegment == null) throw new ArgumentNullException("NextSegment");
+			if (Predicate.Item == null) throw new InvalidOperationException("Invalid one or more times predicate");
 
 			result = BuildSituationSegment(Predicate.Item, NextSegment);
 			foreach(Situation situation in result.OutputSituations)
@@ -182,8 +167,7 @@ namespace LexerLib.Situations
 		{
 			SituationSegment result;
 
-			if (Predicate == null) throw new ArgumentNullException("Predicate");
-			if (NextSegment == null) throw new ArgumentNullException("NextSegment");
+			if (Predicate.Item == null) throw new InvalidOperationException("Invalid zero or more times predicate");
 
 			result = BuildSituationSegment(Predicate.Item, NextSegment);
 			foreach (Situation situation in result.OutputSituations)

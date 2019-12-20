@@ -94,12 +94,12 @@ namespace LexerLib.Predicates
 
 
 		#region Or generators
-		public static Or Or(this Or Or, char Value)
+		public static Or OrCharacter(this Or Or, char Value)
 		{
 			Or.Items.Add(new Character(Value));
 			return Or;
 		}
-		public static Or Or(this Predicate Predicate, char Value)
+		public static Or OrCharacter(this Predicate Predicate, char Value)
 		{
 			return new Or(Predicate, new Character(Value));
 		}

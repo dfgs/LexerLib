@@ -156,13 +156,13 @@ namespace LexerLib.UnitTest
 		{
 			IOr predicate;
 
-			predicate = Parse.Character('a').Or('b');
+			predicate = Parse.Character('a').OrCharacter('b');
 			Assert.IsNotNull(predicate);
 			Assert.AreEqual(2, predicate.Items.Count());
 			Assert.IsInstanceOfType(predicate.Items.ElementAt(0), typeof(Character));
 			Assert.IsInstanceOfType(predicate.Items.ElementAt(1), typeof(Character));
 
-			predicate = Parse.Characters("ab").Or('c');
+			predicate = Parse.Characters("ab").OrCharacter('c');
 			Assert.IsNotNull(predicate);
 			Assert.AreEqual(2, predicate.Items.Count());
 			Assert.IsInstanceOfType(predicate.Items.ElementAt(0), typeof(Sequence));
@@ -211,21 +211,21 @@ namespace LexerLib.UnitTest
 		{
 			IOr predicate;
 
-			predicate = Parse.Character('a').OrOneOrMoreTimes('b').Or('c');
+			predicate = Parse.Character('a').OrOneOrMoreTimes('b').OrCharacter('c');
 			Assert.IsNotNull(predicate);
 			Assert.AreEqual(3, predicate.Items.Count());
 			Assert.IsInstanceOfType(predicate.Items.ElementAt(0), typeof(Character));
 			Assert.IsInstanceOfType(predicate.Items.ElementAt(1), typeof(OneOrMoreTimes));
 			Assert.IsInstanceOfType(predicate.Items.ElementAt(2), typeof(Character));
 
-			predicate = Parse.Character('a').Or('c').OrOneOrMoreTimes('b');
+			predicate = Parse.Character('a').OrCharacter('c').OrOneOrMoreTimes('b');
 			Assert.IsNotNull(predicate);
 			Assert.AreEqual(3, predicate.Items.Count());
 			Assert.IsInstanceOfType(predicate.Items.ElementAt(0), typeof(Character));
 			Assert.IsInstanceOfType(predicate.Items.ElementAt(1), typeof(Character));
 			Assert.IsInstanceOfType(predicate.Items.ElementAt(2), typeof(OneOrMoreTimes));
 
-			predicate = Parse.Character('a').OrOneOrMoreTimes(Parse.AnyCharacter()).Or('c');
+			predicate = Parse.Character('a').OrOneOrMoreTimes(Parse.AnyCharacter()).OrCharacter('c');
 			Assert.IsNotNull(predicate);
 			Assert.AreEqual(3, predicate.Items.Count());
 			Assert.IsInstanceOfType(predicate.Items.ElementAt(0), typeof(Character));
@@ -238,21 +238,21 @@ namespace LexerLib.UnitTest
 		{
 			IOr predicate;
 
-			predicate = Parse.Character('a').OrZeroOrMoreTimes('b').Or('c');
+			predicate = Parse.Character('a').OrZeroOrMoreTimes('b').OrCharacter('c');
 			Assert.IsNotNull(predicate);
 			Assert.AreEqual(3, predicate.Items.Count());
 			Assert.IsInstanceOfType(predicate.Items.ElementAt(0), typeof(Character));
 			Assert.IsInstanceOfType(predicate.Items.ElementAt(1), typeof(ZeroOrMoreTimes));
 			Assert.IsInstanceOfType(predicate.Items.ElementAt(2), typeof(Character));
 
-			predicate = Parse.Character('a').Or('c').OrZeroOrMoreTimes('b');
+			predicate = Parse.Character('a').OrCharacter('c').OrZeroOrMoreTimes('b');
 			Assert.IsNotNull(predicate);
 			Assert.AreEqual(3, predicate.Items.Count());
 			Assert.IsInstanceOfType(predicate.Items.ElementAt(0), typeof(Character));
 			Assert.IsInstanceOfType(predicate.Items.ElementAt(1), typeof(Character));
 			Assert.IsInstanceOfType(predicate.Items.ElementAt(2), typeof(ZeroOrMoreTimes));
 
-			predicate = Parse.Character('a').OrZeroOrMoreTimes(Parse.AnyCharacter()).Or('c');
+			predicate = Parse.Character('a').OrZeroOrMoreTimes(Parse.AnyCharacter()).OrCharacter('c');
 			Assert.IsNotNull(predicate);
 			Assert.AreEqual(3, predicate.Items.Count());
 			Assert.IsInstanceOfType(predicate.Items.ElementAt(0), typeof(Character));
@@ -265,21 +265,21 @@ namespace LexerLib.UnitTest
 		{
 			IOr predicate;
 
-			predicate = Parse.Character('a').OrPerhaps('b').Or('c');
+			predicate = Parse.Character('a').OrPerhaps('b').OrCharacter('c');
 			Assert.IsNotNull(predicate);
 			Assert.AreEqual(3, predicate.Items.Count());
 			Assert.IsInstanceOfType(predicate.Items.ElementAt(0), typeof(Character));
 			Assert.IsInstanceOfType(predicate.Items.ElementAt(1), typeof(Perhaps));
 			Assert.IsInstanceOfType(predicate.Items.ElementAt(2), typeof(Character));
 
-			predicate = Parse.Character('a').Or('c').OrPerhaps('b');
+			predicate = Parse.Character('a').OrCharacter('c').OrPerhaps('b');
 			Assert.IsNotNull(predicate);
 			Assert.AreEqual(3, predicate.Items.Count());
 			Assert.IsInstanceOfType(predicate.Items.ElementAt(0), typeof(Character));
 			Assert.IsInstanceOfType(predicate.Items.ElementAt(1), typeof(Character));
 			Assert.IsInstanceOfType(predicate.Items.ElementAt(2), typeof(Perhaps));
 
-			predicate = Parse.Character('a').OrPerhaps(Parse.AnyCharacter()).Or('c');
+			predicate = Parse.Character('a').OrPerhaps(Parse.AnyCharacter()).OrCharacter('c');
 			Assert.IsNotNull(predicate);
 			Assert.AreEqual(3, predicate.Items.Count());
 			Assert.IsInstanceOfType(predicate.Items.ElementAt(0), typeof(Character));
