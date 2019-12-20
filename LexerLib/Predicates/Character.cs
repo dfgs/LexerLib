@@ -30,6 +30,15 @@ namespace LexerLib.Predicates
 			return new Character(Value);
 		}
 
+		public override bool Accept(char Input)
+		{
+			return Input == Value;
+		}
+
+		public override string ToString()
+		{
+			return Value.ToString();
+		}
 
 	}
 }

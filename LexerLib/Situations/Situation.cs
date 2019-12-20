@@ -21,6 +21,6 @@ namespace LexerLib.Situations
 			this.Transitions = new List<ITransition>();
 		}
 
-
+		
 	}
 }

@@ -25,6 +25,9 @@ namespace LexerLib.Transitions
 		}
 
 
-
+		public override string ToString()
+		{
+			return $"->{Predicate}";
+		}
 	}
 }

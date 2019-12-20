@@ -1,4 +1,4 @@
-﻿using LexerLib.Transitions;
+﻿using LexerLib.Automatons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace LexerLib.Situations
 {
-	public interface ISituation
+	public interface ISituationCollection
 	{
-		IEnumerable<ITransition> Transitions
+		IEnumerable<ISituation> Items
 		{
 			get;
 		}
-
-
-
+		IState State
+		{
+			get;
+		}
 	}
 }

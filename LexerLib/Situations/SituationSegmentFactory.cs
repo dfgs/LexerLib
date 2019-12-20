@@ -15,9 +15,9 @@ namespace LexerLib.Situations
 		}
 
 		#region ISituationSegmentFactory implicit definition
-		ISituation ISituationSegmentFactory.BuildRootSituation(IPredicate Predicate)
+		ISituation ISituationSegmentFactory.BuildRootSituation(params IPredicate[] Predicates)
 		{
-			return BuildRootSituation(Predicate);
+			return BuildRootSituation(Predicates);
 		}
 
 		ISituationSegment ISituationSegmentFactory.BuildSituationSegment(IPredicate Predicate, ISituationSegment NextSegment)
@@ -26,21 +26,23 @@ namespace LexerLib.Situations
 		}
 		#endregion
 
-		public ISituation BuildRootSituation(IPredicate Predicate)
+		public ISituation BuildRootSituation(params IPredicate[] Predicates)
 		{
 			Situation root;
 			SituationSegment nextSegment;
 			ISituationSegment segment;
 
-			if (Predicate == null) throw new ArgumentNullException("Predicate");
+			if (Predicates == null) throw new ArgumentNullException("Predicates");
 
+			root = new Situation();
 			nextSegment = new SituationSegment();
 			nextSegment.InputTransitions.Add(new ReductionTransition());
 
-			segment = BuildSituationSegment(Predicate, nextSegment);
-
-			root = new Situation();
-			root.Transitions.AddRange(segment.InputTransitions);
+			foreach (IPredicate predicate in Predicates)
+			{
+				segment = BuildSituationSegment(predicate, nextSegment);
+				root.Transitions.AddRange(segment.InputTransitions);
+			}
 
 			return root;
 		}

@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace LexerLib.Predicates
 {
-	public abstract class ShiftPredicate:Predicate,IShiftPredicate
+	public abstract class ShiftPredicate : Predicate, IShiftPredicate
 	{
+		public abstract bool Accept(char Input);
 
 
+		
 	}
 }

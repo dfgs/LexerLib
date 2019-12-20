@@ -13,7 +13,7 @@ namespace LexerLib.UnitTest.Situations
 	{
 		private bool ParseSegment(ISituationSegment Segment, params Type[] PredicateTypes)
 		{
-			return ParseSegment(Segment.InputTransitions);
+			return ParseSegment(Segment.InputTransitions,PredicateTypes);
 		}
 		private bool ParseSegment(IEnumerable<ITransition> Transitions , params Type[] PredicateTypes)
 		{
@@ -245,6 +245,21 @@ namespace LexerLib.UnitTest.Situations
 			Assert.IsTrue(ParseSegment(segment, typeof(AnyCharacter), typeof(Character), typeof(Character), typeof(AnyCharacter)));
 			Assert.IsTrue(ParseSegment(segment, typeof(AnyCharacter), typeof(AnyCharacter)));
 			#endregion
+
+			#region one or more inside a sequence
+			predicate = Parse.AnyCharacter().Then(Parse.Character('b').OneOrMoreTimes()).ThenAnyCharacter();
+
+			nextSegment = new SituationSegment();
+			nextSegment.InputTransitions.Add(new ReductionTransition());
+
+			factory = new SituationSegmentFactory();
+			segment = factory.BuildSituationSegment(predicate, nextSegment);
+
+			Assert.IsTrue(ParseSegment(segment, typeof(AnyCharacter), typeof(Character), typeof(AnyCharacter)));
+			Assert.IsTrue(ParseSegment(segment, typeof(AnyCharacter), typeof(Character), typeof(Character), typeof(Character), typeof(AnyCharacter)));
+			#endregion
+
+	
 		}
 
 

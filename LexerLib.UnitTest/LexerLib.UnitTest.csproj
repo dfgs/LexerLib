@@ -49,9 +49,13 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Automatons\StateUnitTest.cs" />
+    <Compile Include="Automatons\AutomatonTableFactoryUnitTest.cs" />
     <Compile Include="CharacterUnitTest.cs" />
     <Compile Include="PredicateExtensionsUnitTest.cs" />
     <Compile Include="ParseUnitTest.cs" />
+    <Compile Include="Predicates\AnyCharacterUnitTest.cs" />
+    <Compile Include="Predicates\CharacterUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Situations\SituationSegmentFactoryUnitTest.cs" />
   </ItemGroup>

@@ -41,6 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Automatons\AutomatonTableFactory.cs" />
+    <Compile Include="Automatons\IAutomatonTableFactory.cs" />
+    <Compile Include="Automatons\IState.cs" />
+    <Compile Include="Automatons\State.cs" />
     <Compile Include="IRule.cs" />
     <Compile Include="Predicates\AnyCharacter.cs" />
     <Compile Include="Predicates\IOr.cs" />
@@ -65,9 +69,11 @@
     <Compile Include="Rule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Situations\ISituation.cs" />
+    <Compile Include="Situations\ISituationCollection.cs" />
     <Compile Include="Situations\ISituationSegmentFactory.cs" />
     <Compile Include="Situations\ISituationSegment.cs" />
     <Compile Include="Situations\Situation.cs" />
+    <Compile Include="Situations\SituationCollection.cs" />
     <Compile Include="Situations\SituationSegmentFactory.cs" />
     <Compile Include="Situations\SituationSegment.cs" />
     <Compile Include="Transitions\Transition.cs" />

@@ -14,6 +14,17 @@ namespace LexerLib.Predicates
 		{
 
 		}
-		
+
+		public override bool Accept(char Input)
+		{
+			return true;
+		}
+
+		public override string ToString()
+		{
+			return ".";
+		}
+
+
 	}
 }

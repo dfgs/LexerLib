@@ -8,5 +8,6 @@ namespace LexerLib.Predicates
 {
 	public interface IShiftPredicate:IPredicate
 	{
+		bool Accept(char Input);
 	}
 }
