@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LexerLib.Transitions
 {
-	public class ShiftTransition : BaseTransition, IShiftTransition
+	public class ShiftTransition : Transition, IShiftTransition
 	{
 		IShiftPredicate IShiftTransition.Predicate => Predicate;
 		public IShiftPredicate Predicate

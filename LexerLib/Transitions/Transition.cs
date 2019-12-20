@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LexerLib.Transitions
 {
-	public class BaseTransition:ITransition
+	public class Transition:ITransition
 	{
 	}
 }

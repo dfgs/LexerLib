@@ -65,10 +65,12 @@
     <Compile Include="Rule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Situations\ISituation.cs" />
-    <Compile Include="Situations\ISituationFactory.cs" />
+    <Compile Include="Situations\ISituationSegmentFactory.cs" />
+    <Compile Include="Situations\ISituationSegment.cs" />
     <Compile Include="Situations\Situation.cs" />
-    <Compile Include="Situations\SituationFactory.cs" />
-    <Compile Include="Transitions\BaseTransition.cs" />
+    <Compile Include="Situations\SituationSegmentFactory.cs" />
+    <Compile Include="Situations\SituationSegment.cs" />
+    <Compile Include="Transitions\Transition.cs" />
     <Compile Include="Transitions\IShiftTransition.cs" />
     <Compile Include="Transitions\IReductionTransition.cs" />
     <Compile Include="Transitions\ITransition.cs" />
