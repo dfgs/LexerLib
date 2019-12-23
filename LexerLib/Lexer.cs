@@ -35,7 +35,9 @@ namespace LexerLib
 
 		}
 		
+
 		
+
 		public Token Read()
 		{
 			char input;
@@ -73,15 +75,51 @@ namespace LexerLib
 					reader.Pop();
 					sb.Append(input);
 				}
-
-
 			}
 		
 		}
 
 		public bool TryRead(out Token Token)
 		{
-			throw new NotImplementedException();
+			char input;
+			int? index = 0;
+			IState currentState;
+			StringBuilder sb;
+			string _class;
+
+			sb = new StringBuilder();
+
+			currentState = states[0];
+			while (true)
+			{
+
+				if (reader.EOF)
+				{
+					_class = currentState.Reductions.FirstOrDefault();
+					Token= new Token(_class, sb.ToString());
+					return _class != null;
+				}
+				else
+				{
+					input = reader.Peek();
+					index = currentState.GetNextStateIndex(input);
+
+					// cannot read further
+					if (index == null)
+					{
+						_class = currentState.Reductions.FirstOrDefault();
+						Token = new Token(_class, sb.ToString());
+						return _class != null;
+					}
+
+					currentState = states[index.Value];
+					reader.Pop();
+					sb.Append(input);
+				}
+			}
 		}
+
+
+
 	}
 }

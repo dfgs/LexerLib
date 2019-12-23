@@ -44,7 +44,30 @@ namespace LexerLib.UnitTest
 		[TestMethod]
 		public void ShouldTryRead()
 		{
-			Assert.Fail();
+			ICharReader reader;
+			ILexer lexer;
+			Rule number, word;
+			Token token;
+			bool result;
+
+			reader = new MockedCharReader("12345abc");
+
+			number = new Rule("Number", Parse.Character('0').OrCharacter('1').OrCharacter('2').OrCharacter('3').OrCharacter('4').OrCharacter('5').OrCharacter('6').OrCharacter('7').OrCharacter('8').OrCharacter('9').OneOrMoreTimes());
+			word = new Rule("Word", Parse.Character('a').OrCharacter('b').OrCharacter('c').OrCharacter('d').OneOrMoreTimes());
+
+			lexer = new Lexer(reader, word, number);
+
+			result= lexer.TryRead(out token);
+			Assert.IsTrue(result);
+			Assert.AreEqual("Number", token.Class);
+			Assert.AreEqual("12345", token.Value);
+
+			result = lexer.TryRead(out token);
+			Assert.IsTrue(result);
+			Assert.AreEqual("Word", token.Class);
+			Assert.AreEqual("abc", token.Value);
+
+			
 		}
 
 
@@ -71,11 +94,85 @@ namespace LexerLib.UnitTest
 
 			Assert.ThrowsException<EndOfStreamException>( ()=>lexer.Read() );
 		}
-
 		[TestMethod]
-		public void ShouldFailToTryRead()
+		public void ShouldFailToReadAndThrowInvalidInputException()
 		{
-			Assert.Fail();
+			ICharReader reader;
+			ILexer lexer;
+			Rule word;
+			Token token;
+			InvalidInputException ex;
+
+			word = new Rule("Word", Parse.Characters("token"));
+
+			reader = new MockedCharReader("token");
+			lexer = new Lexer(reader, word);
+
+			token = lexer.Read();
+			Assert.AreEqual("Word", token.Class);
+			Assert.AreEqual("token", token.Value);
+
+			reader = new MockedCharReader("toked");
+			lexer = new Lexer(reader, word);
+
+			ex=Assert.ThrowsException<InvalidInputException>(() => lexer.Read());
+			Assert.AreEqual('d', ex.Input);
+		}
+		[TestMethod]
+		public void ShouldFailToTryReadWhenEOF()
+		{
+			ICharReader reader;
+			ILexer lexer;
+			Rule word;
+			Token token;
+			bool result;
+
+			word = new Rule("Word", Parse.Characters("token"));
+
+			reader = new MockedCharReader("token");
+			lexer = new Lexer(reader, word);
+
+			result = lexer.TryRead(out token);
+			Assert.IsTrue(result);
+			Assert.AreEqual("Word", token.Class);
+			Assert.AreEqual("token", token.Value);
+
+			reader = new MockedCharReader("toke");
+			lexer = new Lexer(reader, word);
+			
+			result = lexer.TryRead(out token);
+			Assert.IsFalse(result);
+			Assert.IsNull(token.Class);
+			Assert.AreEqual("toke", token.Value);
+
+		}
+		[TestMethod]
+		public void ShouldFailToTryReadWhenInvalidChar()
+		{
+			ICharReader reader;
+			ILexer lexer;
+			Rule word;
+			Token token;
+			bool result;
+
+			word = new Rule("Word", Parse.Characters("token"));
+
+			reader = new MockedCharReader("token");
+			lexer = new Lexer(reader, word);
+
+			result = lexer.TryRead(out token);
+			Assert.IsTrue(result);
+			Assert.AreEqual("Word", token.Class);
+			Assert.AreEqual("token", token.Value);
+
+			reader = new MockedCharReader("toked");
+			lexer = new Lexer(reader, word);
+
+			result = lexer.TryRead(out token);
+			Assert.IsFalse(result);
+			Assert.IsNull(token.Class);
+			Assert.AreEqual("toke", token.Value);
+
 		}
 
 
