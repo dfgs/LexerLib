@@ -26,5 +26,11 @@ namespace LexerLib.Predicates
 		{
 			this.Item = Item;
 		}
+
+		public override string ToString()
+		{
+			return $"{Item}+";
+		}
+
 	}
 }

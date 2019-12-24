@@ -26,5 +26,10 @@ namespace LexerLib.Predicates
 		{
 			this.Items = new List<Predicate>(Items);
 		}
+		public override string ToString()
+		{
+			return $"({string.Join("",Items)})";
+		}
+
 	}
 }

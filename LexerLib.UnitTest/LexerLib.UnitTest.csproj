@@ -52,10 +52,14 @@
   <ItemGroup>
     <Compile Include="Automatons\StateUnitTest.cs" />
     <Compile Include="Automatons\AutomatonTableFactoryUnitTest.cs" />
+    <Compile Include="Predicates\ZeroOrMoreTimesUnitTest.cs" />
+    <Compile Include="Predicates\OneOrMoreTimesUnitTest.cs" />
+    <Compile Include="Predicates\PerhapsUnitTest.cs" />
+    <Compile Include="Predicates\OrUnitTest.cs" />
+    <Compile Include="Predicates\SequenceUnitTest.cs" />
     <Compile Include="RuleUnitTest.cs" />
     <Compile Include="StreamCharReaderUnitTest.cs" />
     <Compile Include="LexerUnitTest.cs" />
-    <Compile Include="CharacterUnitTest.cs" />
     <Compile Include="Mocks\MockedCharReader.cs" />
     <Compile Include="PredicateExtensionsUnitTest.cs" />
     <Compile Include="ParseUnitTest.cs" />

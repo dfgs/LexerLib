@@ -10,6 +10,25 @@ namespace LexerLib.UnitTest.Predicates
 	public class CharacterUnitTest
 	{
 		[TestMethod]
+		public void ShouldImplicitConvertFromChar()
+		{
+			Character predicate;
+
+			predicate = 'a';
+			Assert.IsNotNull(predicate);
+			Assert.AreEqual('a', predicate.Value);
+		}
+
+		[TestMethod]
+		public void ShouldConvertToString()
+		{
+			IPredicate predicate;
+
+			predicate = Parse.Character('a');
+			Assert.AreEqual("a", predicate.ToString());
+		}
+
+		[TestMethod]
 		public void ShouldAccept()
 		{
 			Character predicate ;

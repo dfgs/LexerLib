@@ -10,6 +10,15 @@ namespace LexerLib.UnitTest.Predicates
 	public class AnyCharacterUnitTest
 	{
 		[TestMethod]
+		public void ShouldConvertToString()
+		{
+			IPredicate predicate;
+
+			predicate = Parse.AnyCharacter();
+			Assert.AreEqual(".", predicate.ToString());
+		}
+
+		[TestMethod]
 		public void ShouldAccept()
 		{
 			AnyCharacter predicate ;
