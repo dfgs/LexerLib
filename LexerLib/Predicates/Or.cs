@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace LexerLib.Predicates
 {
 	public class Or : Predicate, IOr
 	{
+		[XmlIgnore]
 		IEnumerable<IPredicate> IOr.Items => Items;
-		public List<IPredicate> Items
+		public List<Predicate> Items
 		{
 			get;
 			set;
@@ -18,11 +20,11 @@ namespace LexerLib.Predicates
 
 		public Or()
 		{
-			this.Items = new List<IPredicate>();
+			this.Items = new List<Predicate>();
 		}
-		public Or(params IPredicate[] Items)
+		public Or(params Predicate[] Items)
 		{
-			this.Items = new List<IPredicate>(Items);
+			this.Items = new List<Predicate>(Items);
 		}
 	}
 }

@@ -47,10 +47,12 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Automatons\StateUnitTest.cs" />
     <Compile Include="Automatons\AutomatonTableFactoryUnitTest.cs" />
+    <Compile Include="RuleUnitTest.cs" />
     <Compile Include="StreamCharReaderUnitTest.cs" />
     <Compile Include="LexerUnitTest.cs" />
     <Compile Include="CharacterUnitTest.cs" />
@@ -70,6 +72,9 @@
       <Project>{8ba1f09c-69d8-455d-b3e4-4414e5790d39}</Project>
       <Name>LexerLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="example.xml" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace LexerLib.Predicates
 {
 	public class OneOrMoreTimes : Predicate, IOneOrMoreTimes
 	{
+		[XmlIgnore]
 		IPredicate IOneOrMoreTimes.Item => Item;
-		public IPredicate Item
+		public Predicate Item
 		{
 			get;
 			set;
@@ -20,7 +22,7 @@ namespace LexerLib.Predicates
 		{
 			
 		}
-		public OneOrMoreTimes(IPredicate Item)
+		public OneOrMoreTimes(Predicate Item)
 		{
 			this.Item = Item;
 		}

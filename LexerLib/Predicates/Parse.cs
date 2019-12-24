@@ -34,7 +34,7 @@ namespace LexerLib.Predicates
 		{
 			return new OneOrMoreTimes(new Character(Item));
 		}
-		public static OneOrMoreTimes OneOrMoreTimes(IPredicate Item)
+		public static OneOrMoreTimes OneOrMoreTimes(Predicate Item)
 		{
 			return new OneOrMoreTimes(Item);
 		}
@@ -43,7 +43,7 @@ namespace LexerLib.Predicates
 		{
 			return new ZeroOrMoreTimes(new Character(Item));
 		}
-		public static ZeroOrMoreTimes ZeroOrMoreTimes(IPredicate Item)
+		public static ZeroOrMoreTimes ZeroOrMoreTimes(Predicate Item)
 		{
 			return new ZeroOrMoreTimes(Item);
 		}
@@ -52,7 +52,7 @@ namespace LexerLib.Predicates
 		{
 			return new Perhaps(new Character(Item));
 		}
-		public static Perhaps Perhaps(IPredicate Item)
+		public static Perhaps Perhaps(Predicate Item)
 		{
 			return new Perhaps(Item);
 		}

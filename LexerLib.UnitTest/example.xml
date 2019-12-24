@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<Rule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="RuleA">
+  <Predicate xsi:type="Sequence">
+    <Items>
+      <Predicate xsi:type="OneOrMoreTimes">
+        <Item xsi:type="Character" Value="97" />
+      </Predicate>
+      <Predicate xsi:type="Or">
+        <Items>
+          <Predicate xsi:type="AnyCharacter" />
+          <Predicate xsi:type="Character" Value="98" />
+        </Items>
+      </Predicate>
+      <Predicate xsi:type="Perhaps">
+        <Item xsi:type="Character" Value="100" />
+      </Predicate>
+    </Items>
+  </Predicate>
+</Rule>
