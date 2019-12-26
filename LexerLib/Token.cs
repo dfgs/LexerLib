@@ -24,5 +24,9 @@ namespace LexerLib
 			this.Class = Class;this.Value = Value;
 		}
 
+		public override string ToString()
+		{
+			return $"<{Class},{Value}>";
+		}
 	}
 }

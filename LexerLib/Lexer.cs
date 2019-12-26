@@ -13,15 +13,13 @@ namespace LexerLib
 	public class Lexer : ILexer
 	{
 		private IState[] states;
-		private ICharReader reader;
+		//private ICharReader reader;
 
-		public Lexer(ICharReader Reader, params IRule[] Rules)
+		public Lexer( params IRule[] Rules)
 		{
 
-			if (Reader == null) throw new ArgumentNullException("Reader");
 			if (Rules == null) throw new ArgumentNullException("Rules");
 
-			this.reader = Reader;
 	
 			IAutomatonTableFactory automatonTableFactory;
 			ISituationSegmentFactory situationSegmentFactory;
@@ -36,15 +34,17 @@ namespace LexerLib
 		}
 		
 
-		
 
-		public Token Read()
+
+		public Token Read(ICharReader Reader)
 		{
 			char input;
 			int? index = 0;
 			IState currentState;
 			StringBuilder sb;
 			string _class;
+
+			if (Reader == null) throw new ArgumentNullException("Reader");
 
 			sb = new StringBuilder();
 
@@ -52,34 +52,34 @@ namespace LexerLib
 			while(true)
 			{
 				
-				if (reader.EOF)
+				if (Reader.EOF)
 				{
 					_class = currentState.Reductions.FirstOrDefault();
-					if (_class == null) throw new Exceptions.EndOfStreamException(reader.Position);
+					if (_class == null) throw new Exceptions.EndOfStreamException(Reader.Position);
 					return new Token(_class, sb.ToString());
 				}
 				else
 				{
-					input = reader.Peek();
+					input = Reader.Peek();
 					index = currentState.GetNextStateIndex(input);
 
 					// cannot read further
 					if (index == null)
 					{
 						_class = currentState.Reductions.FirstOrDefault();
-						if (_class == null) throw new InvalidInputException(reader.Position, input);
+						if (_class == null) throw new InvalidInputException(Reader.Position, input);
 						return new Token(_class, sb.ToString());
 					}
 
 					currentState = states[index.Value];
-					reader.Pop();
+					Reader.Pop();
 					sb.Append(input);
 				}
 			}
 		
 		}
 
-		public bool TryRead(out Token Token)
+		public bool TryRead(ICharReader Reader,out Token Token)
 		{
 			char input;
 			int? index = 0;
@@ -87,13 +87,15 @@ namespace LexerLib
 			StringBuilder sb;
 			string _class;
 
+			if (Reader == null) throw new ArgumentNullException("Reader");
+
 			sb = new StringBuilder();
 
 			currentState = states[0];
 			while (true)
 			{
 
-				if (reader.EOF)
+				if (Reader.EOF)
 				{
 					_class = currentState.Reductions.FirstOrDefault();
 					Token= new Token(_class, sb.ToString());
@@ -101,7 +103,7 @@ namespace LexerLib
 				}
 				else
 				{
-					input = reader.Peek();
+					input = Reader.Peek();
 					index = currentState.GetNextStateIndex(input);
 
 					// cannot read further
@@ -113,7 +115,7 @@ namespace LexerLib
 					}
 
 					currentState = states[index.Value];
-					reader.Pop();
+					Reader.Pop();
 					sb.Append(input);
 				}
 			}

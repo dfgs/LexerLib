@@ -71,6 +71,7 @@
     <Compile Include="Predicates\CharacterUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Situations\SituationSegmentFactoryUnitTest.cs" />
+    <Compile Include="TokenUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
