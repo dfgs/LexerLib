@@ -82,6 +82,7 @@
     <Compile Include="Situations\SituationCollection.cs" />
     <Compile Include="Situations\SituationSegmentFactory.cs" />
     <Compile Include="Situations\SituationSegment.cs" />
+    <Compile Include="StringCharReader.cs" />
     <Compile Include="StreamCharReader.cs" />
     <Compile Include="Token.cs" />
     <Compile Include="Transitions\Transition.cs" />

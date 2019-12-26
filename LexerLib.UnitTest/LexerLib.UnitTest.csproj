@@ -58,6 +58,7 @@
     <Compile Include="Predicates\OrUnitTest.cs" />
     <Compile Include="Predicates\SequenceUnitTest.cs" />
     <Compile Include="RuleUnitTest.cs" />
+    <Compile Include="StringCharReaderUnitTest.cs" />
     <Compile Include="StreamCharReaderUnitTest.cs" />
     <Compile Include="LexerUnitTest.cs" />
     <Compile Include="Mocks\MockedCharReader.cs" />
