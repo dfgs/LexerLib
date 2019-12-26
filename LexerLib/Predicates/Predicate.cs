@@ -7,7 +7,11 @@ using System.Xml.Serialization;
 
 namespace LexerLib.Predicates
 {
-	[XmlInclude(typeof(Character)), XmlInclude(typeof(AnyCharacter)), XmlInclude(typeof(OneOrMoreTimes)), XmlInclude(typeof(ZeroOrMoreTimes)), XmlInclude(typeof(Sequence)), XmlInclude(typeof(Perhaps)), XmlInclude(typeof(Or))]
+	[XmlInclude(typeof(Character)), XmlInclude(typeof(AnyCharacter)),
+		XmlInclude(typeof(ExceptCharacter)), XmlInclude(typeof(CharacterRange)), XmlInclude(typeof(ExceptCharacterRange)),
+		XmlInclude(typeof(OneOrMoreTimes)),
+		XmlInclude(typeof(ZeroOrMoreTimes)), XmlInclude(typeof(Sequence)), XmlInclude(typeof(Perhaps)),
+		XmlInclude(typeof(Or))]
 	public abstract class Predicate:IPredicate
 	{
 
