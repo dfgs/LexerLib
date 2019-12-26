@@ -18,6 +18,33 @@ namespace LexerLib.Predicates
 		{
 			return new Sequence(Predicate, new Character(Value));
 		}
+		public static Sequence ThenExceptCharacter(this Sequence Sequence, char Value)
+		{
+			Sequence.Items.Add(new ExceptCharacter(Value));
+			return Sequence;
+		}
+		public static Sequence ThenExceptCharacter(this Predicate Predicate, char Value)
+		{
+			return new Sequence(Predicate, new ExceptCharacter(Value));
+		}
+		public static Sequence ThenCharacterRange(this Sequence Sequence, char FirstValue, char LastValue)
+		{
+			Sequence.Items.Add(new CharacterRange(FirstValue, LastValue));
+			return Sequence;
+		}
+		public static Sequence ThenCharacterRange(this Predicate Predicate, char FirstValue, char LastValue)
+		{
+			return new Sequence(Predicate, new CharacterRange(FirstValue, LastValue));
+		}
+		public static Sequence ThenExceptCharacterRange(this Sequence Sequence, char FirstValue, char LastValue)
+		{
+			Sequence.Items.Add(new ExceptCharacterRange(FirstValue, LastValue));
+			return Sequence;
+		}
+		public static Sequence ThenExceptCharacterRange(this Predicate Predicate, char FirstValue, char LastValue)
+		{
+			return new Sequence(Predicate, new ExceptCharacterRange(FirstValue, LastValue));
+		}
 		public static Sequence Then(this Sequence Sequence, Predicate Value)
 		{
 			Sequence.Items.Add(Value);
@@ -102,6 +129,33 @@ namespace LexerLib.Predicates
 		public static Or OrCharacter(this Predicate Predicate, char Value)
 		{
 			return new Or(Predicate, new Character(Value));
+		}
+		public static Or OrExceptCharacter(this Or Or, char Value)
+		{
+			Or.Items.Add(new ExceptCharacter(Value));
+			return Or;
+		}
+		public static Or OrExceptCharacter(this Predicate Predicate, char Value)
+		{
+			return new Or(Predicate, new ExceptCharacter(Value));
+		}
+		public static Or OrCharacterRange(this Or Or, char FirstValue, char LastValue)
+		{
+			Or.Items.Add(new CharacterRange(FirstValue, LastValue));
+			return Or;
+		}
+		public static Or OrCharacterRange(this Predicate Predicate, char FirstValue, char LastValue)
+		{
+			return new Or(Predicate, new CharacterRange(FirstValue, LastValue));
+		}
+		public static Or OrExceptCharacterRange(this Or Or, char FirstValue, char LastValue)
+		{
+			Or.Items.Add(new ExceptCharacterRange(FirstValue, LastValue));
+			return Or;
+		}
+		public static Or OrExceptCharacterRange(this Predicate Predicate, char FirstValue, char LastValue)
+		{
+			return new Or(Predicate, new ExceptCharacterRange(FirstValue, LastValue));
 		}
 		public static Or Or(this Or Or, Predicate Value)
 		{
@@ -188,10 +242,10 @@ namespace LexerLib.Predicates
 		{
 			return new OneOrMoreTimes(new Character(Value));
 		}
-
+		
 		#endregion
 
-		
+
 		#region ZeroOrMoreTimes generators
 
 		public static ZeroOrMoreTimes ZeroOrMoreTimes(this Predicate Predicate)

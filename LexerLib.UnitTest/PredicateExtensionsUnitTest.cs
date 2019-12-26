@@ -29,6 +29,63 @@ namespace LexerLib.UnitTest
 			Assert.IsInstanceOfType(predicate.Items.ElementAt(2), typeof(Character));
 
 		}
+		[TestMethod]
+		public void ShouldCreateSequencePredicateAddingExceptCharacter()
+		{
+			ISequence predicate;
+
+			predicate = Parse.Character('a').ThenExceptCharacter('b');
+			Assert.IsNotNull(predicate);
+			Assert.AreEqual(2, predicate.Items.Count());
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(0), typeof(Character));
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(1), typeof(ExceptCharacter));
+
+			predicate = Parse.Characters("ab").ThenExceptCharacter('c');
+			Assert.IsNotNull(predicate);
+			Assert.AreEqual(3, predicate.Items.Count());
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(0), typeof(Character));
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(1), typeof(Character));
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(2), typeof(ExceptCharacter));
+
+		}
+		[TestMethod]
+		public void ShouldCreateSequencePredicateAddingCharacterRange()
+		{
+			ISequence predicate;
+
+			predicate = Parse.Character('a').ThenCharacterRange('b', 'z');
+			Assert.IsNotNull(predicate);
+			Assert.AreEqual(2, predicate.Items.Count());
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(0), typeof(Character));
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(1), typeof(CharacterRange));
+
+			predicate = Parse.Characters("ab").ThenCharacterRange('c', 'z');
+			Assert.IsNotNull(predicate);
+			Assert.AreEqual(3, predicate.Items.Count());
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(0), typeof(Character));
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(1), typeof(Character));
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(2), typeof(CharacterRange));
+
+		}
+		[TestMethod]
+		public void ShouldCreateSequencePredicateAddingExceptCharacterRange()
+		{
+			ISequence predicate;
+
+			predicate = Parse.Character('a').ThenExceptCharacterRange('b', 'z');
+			Assert.IsNotNull(predicate);
+			Assert.AreEqual(2, predicate.Items.Count());
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(0), typeof(Character));
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(1), typeof(ExceptCharacterRange));
+
+			predicate = Parse.Characters("ab").ThenExceptCharacterRange('c', 'z');
+			Assert.IsNotNull(predicate);
+			Assert.AreEqual(3, predicate.Items.Count());
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(0), typeof(Character));
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(1), typeof(Character));
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(2), typeof(ExceptCharacterRange));
+
+		}
 
 		[TestMethod]
 		public void ShouldCreateSequencePredicateAddingAnyCharacter()
@@ -169,7 +226,60 @@ namespace LexerLib.UnitTest
 			Assert.IsInstanceOfType(predicate.Items.ElementAt(1), typeof(Character));
 
 		}
+		[TestMethod]
+		public void ShouldCreateOrPredicateAddingExceptCharacter()
+		{
+			IOr predicate;
 
+			predicate = Parse.Character('a').OrExceptCharacter('b');
+			Assert.IsNotNull(predicate);
+			Assert.AreEqual(2, predicate.Items.Count());
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(0), typeof(Character));
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(1), typeof(ExceptCharacter));
+
+			predicate = Parse.Characters("ab").OrExceptCharacter('c');
+			Assert.IsNotNull(predicate);
+			Assert.AreEqual(2, predicate.Items.Count());
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(0), typeof(Sequence));
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(1), typeof(ExceptCharacter));
+
+		}
+		[TestMethod]
+		public void ShouldCreateOrPredicateAddingCharacterRange()
+		{
+			IOr predicate;
+
+			predicate = Parse.Character('a').OrCharacterRange('b','z');
+			Assert.IsNotNull(predicate);
+			Assert.AreEqual(2, predicate.Items.Count());
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(0), typeof(Character));
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(1), typeof(CharacterRange));
+
+			predicate = Parse.Characters("ab").OrCharacterRange('c', 'z');
+			Assert.IsNotNull(predicate);
+			Assert.AreEqual(2, predicate.Items.Count());
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(0), typeof(Sequence));
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(1), typeof(CharacterRange));
+
+		}
+		[TestMethod]
+		public void ShouldCreateOrPredicateAddingExceptCharacterRange()
+		{
+			IOr predicate;
+
+			predicate = Parse.Character('a').OrExceptCharacterRange('b', 'z');
+			Assert.IsNotNull(predicate);
+			Assert.AreEqual(2, predicate.Items.Count());
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(0), typeof(Character));
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(1), typeof(ExceptCharacterRange));
+
+			predicate = Parse.Characters("ab").OrExceptCharacterRange('c', 'z');
+			Assert.IsNotNull(predicate);
+			Assert.AreEqual(2, predicate.Items.Count());
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(0), typeof(Sequence));
+			Assert.IsInstanceOfType(predicate.Items.ElementAt(1), typeof(ExceptCharacterRange));
+
+		}
 		[TestMethod]
 		public void ShouldCreateOrPredicateAddingAnyCharacter()
 		{

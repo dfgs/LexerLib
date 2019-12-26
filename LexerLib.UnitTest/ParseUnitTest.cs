@@ -17,6 +17,35 @@ namespace LexerLib.UnitTest
 			Assert.IsNotNull(predicate);
 			Assert.AreEqual('a', predicate.Value);
 		}
+		[TestMethod]
+		public void ShouldCreateExceptCharacterPredicate()
+		{
+			IExceptCharacter predicate;
+
+			predicate = Parse.ExceptCharacter('a');
+			Assert.IsNotNull(predicate);
+			Assert.AreEqual('a', predicate.Value);
+		}
+		[TestMethod]
+		public void ShouldCreateCharacterRangePredicate()
+		{
+			ICharacterRange predicate;
+
+			predicate = Parse.CharacterRange('a', 'z');
+			Assert.IsNotNull(predicate);
+			Assert.AreEqual('a', predicate.FirstValue);
+			Assert.AreEqual('z', predicate.LastValue);
+		}
+		[TestMethod]
+		public void ShouldCreateExceptCharacterRangePredicate()
+		{
+			IExceptCharacterRange predicate;
+
+			predicate = Parse.ExceptCharacterRange('a', 'z');
+			Assert.IsNotNull(predicate);
+			Assert.AreEqual('a', predicate.FirstValue);
+			Assert.AreEqual('z', predicate.LastValue);
+		}
 
 		[TestMethod]
 		public void ShouldCreateSequencePredicate()

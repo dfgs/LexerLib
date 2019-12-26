@@ -18,6 +18,12 @@ namespace LexerLib
             get;
             set;
         }
+        [XmlAttribute]
+        public string Description
+        {
+            get;
+            set;
+        }
 
         [XmlIgnore]
         IPredicate IRule.Predicate => Predicate;

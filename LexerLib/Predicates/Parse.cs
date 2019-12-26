@@ -12,6 +12,18 @@ namespace LexerLib.Predicates
 		{
 			return new Character(Value);
 		}
+		public static ExceptCharacter ExceptCharacter(char Value)
+		{
+			return new ExceptCharacter(Value);
+		}
+		public static CharacterRange CharacterRange(char FirstValue, char LastValue)
+		{
+			return new CharacterRange(FirstValue, LastValue);
+		}
+		public static ExceptCharacterRange ExceptCharacterRange(char FirstValue, char LastValue)
+		{
+			return new ExceptCharacterRange(FirstValue, LastValue);
+		}
 		public static Sequence Characters(params char[] Items)
 		{
 			return new Sequence(Items.Select(item => new Character(item)).ToArray());

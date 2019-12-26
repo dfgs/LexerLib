@@ -52,6 +52,9 @@
   <ItemGroup>
     <Compile Include="Automatons\StateUnitTest.cs" />
     <Compile Include="Automatons\AutomatonTableFactoryUnitTest.cs" />
+    <Compile Include="Predicates\ExceptCharacterRangeUnitTest.cs" />
+    <Compile Include="Predicates\CharacterRangeUnitTest.cs" />
+    <Compile Include="Predicates\ExceptCharacterUnitTest.cs" />
     <Compile Include="Predicates\ZeroOrMoreTimesUnitTest.cs" />
     <Compile Include="Predicates\OneOrMoreTimesUnitTest.cs" />
     <Compile Include="Predicates\PerhapsUnitTest.cs" />

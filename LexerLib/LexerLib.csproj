@@ -53,6 +53,12 @@
     <Compile Include="Lexer.cs" />
     <Compile Include="Exceptions\LexerException.cs" />
     <Compile Include="Predicates\AnyCharacter.cs" />
+    <Compile Include="Predicates\ExceptCharacterRange.cs" />
+    <Compile Include="Predicates\ExceptCharacter.cs" />
+    <Compile Include="Predicates\CharacterRange.cs" />
+    <Compile Include="Predicates\IExceptCharacterRange.cs" />
+    <Compile Include="Predicates\IExceptCharacter.cs" />
+    <Compile Include="Predicates\ICharacterRange.cs" />
     <Compile Include="Predicates\IOr.cs" />
     <Compile Include="Predicates\IShiftPredicate.cs" />
     <Compile Include="Predicates\IZeroOrMoreTimes.cs" />
