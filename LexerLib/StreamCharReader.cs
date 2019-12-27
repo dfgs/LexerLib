@@ -10,42 +10,28 @@ namespace LexerLib
 	public class StreamCharReader : ICharReader
 	{
 		private BinaryReader reader;
-		private bool eof;
-		public bool EOF => eof;
+		
+		public bool EOF => reader.BaseStream.Position==reader.BaseStream.Length;
 
-		private long position;
-		public long Position => position;
+		public long Position => reader.BaseStream.Position;
 
-		private char currentValue;
 
 		public StreamCharReader(Stream Stream,Encoding Encoding)
 		{
 			if (Stream == null) throw new ArgumentNullException("Stream");
 			if (Encoding == null) throw new ArgumentNullException("Encoding");
 			this.reader = new BinaryReader(Stream,Encoding);
-			ReadCurrentValue();
 		}
 
-		private void ReadCurrentValue()
+
+		public char Read()
 		{
-			position = reader.BaseStream.Position;
-			eof= reader.BaseStream.Position == reader.BaseStream.Length;
-			if (!eof) currentValue = reader.ReadChar();
-		}
-		public char Peek()
-		{
-			if (EOF) throw new EndOfStreamException();
-			return currentValue;
+			return reader.ReadChar();
 		}
 
-		public char Pop()
+		public void Seek(long Position)
 		{
-			char result;
-
-			if (EOF) throw new EndOfStreamException();
-			result = currentValue;
-			ReadCurrentValue();
-			return result;
+			reader.BaseStream.Seek(Position,SeekOrigin.Begin);
 		}
 
 	}

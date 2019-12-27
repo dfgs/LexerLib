@@ -43,6 +43,8 @@ namespace LexerLib
 			IState currentState;
 			StringBuilder sb;
 			string _class;
+			Token lastGoodToken=new Token();
+			long lastGoodPosition=0;
 
 			if (Reader == null) throw new ArgumentNullException("Reader");
 
@@ -51,32 +53,36 @@ namespace LexerLib
 			currentState = states[0];
 			while(true)
 			{
-				
 				if (Reader.EOF)
 				{
-					_class = currentState.Reductions.FirstOrDefault();
-					if (_class == null) throw new Exceptions.EndOfStreamException(Reader.Position);
-					return new Token(_class, sb.ToString());
+					if (lastGoodPosition != 0) break;
+					throw new Exceptions.EndOfStreamException(Reader.Position);
 				}
 				else
 				{
-					input = Reader.Peek();
+					input = Reader.Read();
 					index = currentState.GetNextStateIndex(input);
+				}
+				
+				if (index == null)
+				{
+					if (lastGoodPosition != 0) break;
+					throw new InvalidInputException(Reader.Position, input);
+				}
+				
+				sb.Append(input);
+				currentState = states[index.Value];
 
-					// cannot read further
-					if (index == null)
-					{
-						_class = currentState.Reductions.FirstOrDefault();
-						if (_class == null) throw new InvalidInputException(Reader.Position, input);
-						return new Token(_class, sb.ToString());
-					}
-
-					currentState = states[index.Value];
-					Reader.Pop();
-					sb.Append(input);
+				_class = currentState.Reductions.FirstOrDefault();
+				if (_class != null)
+				{
+					lastGoodPosition = Reader.Position;
+					lastGoodToken = new Token(_class, sb.ToString());
 				}
 			}
-		
+
+			Reader.Seek(lastGoodPosition);
+			return lastGoodToken;
 		}
 
 		public bool TryRead(ICharReader Reader,out Token Token)
@@ -86,39 +92,46 @@ namespace LexerLib
 			IState currentState;
 			StringBuilder sb;
 			string _class;
+			long lastGoodPosition = 0;
 
 			if (Reader == null) throw new ArgumentNullException("Reader");
 
+			Token = new Token();
 			sb = new StringBuilder();
 
 			currentState = states[0];
 			while (true)
 			{
-
 				if (Reader.EOF)
 				{
-					_class = currentState.Reductions.FirstOrDefault();
-					Token= new Token(_class, sb.ToString());
-					return _class != null;
+					if (lastGoodPosition == 0) Token = new Token(null, sb.ToString());
+					break;
 				}
 				else
 				{
-					input = Reader.Peek();
+					input = Reader.Read();
 					index = currentState.GetNextStateIndex(input);
+				}
 
-					// cannot read further
-					if (index == null)
-					{
-						_class = currentState.Reductions.FirstOrDefault();
-						Token = new Token(_class, sb.ToString());
-						return _class != null;
-					}
+				if (index == null)
+				{
+					if (lastGoodPosition == 0) Token = new Token(null, sb.ToString());
+					break;
+				}
 
-					currentState = states[index.Value];
-					Reader.Pop();
-					sb.Append(input);
+				sb.Append(input);
+				currentState = states[index.Value];
+
+				_class = currentState.Reductions.FirstOrDefault();
+				if (_class != null)
+				{
+					lastGoodPosition = Reader.Position;
+					Token = new Token(_class, sb.ToString());
 				}
 			}
+
+			Reader.Seek(lastGoodPosition);
+			return Token.Class!=null;
 		}
 
 

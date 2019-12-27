@@ -19,51 +19,25 @@ namespace LexerLib.UnitTest
 		}
 
 		[TestMethod]
-		public void ShouldPeekFirstCharacter()
+		public void ShouldReadCharacters()
 		{
 			ICharReader reader;
 
 			reader = new StringCharReader("Welcome");
 			Assert.AreEqual(0, reader.Position);
-			Assert.AreEqual('W', reader.Peek());
-			Assert.AreEqual(0, reader.Position);
-			Assert.AreEqual('W', reader.Peek());
-			Assert.AreEqual(0, reader.Position);
-		}
-
-		[TestMethod]
-		public void ShouldPopFirstCharacter()
-		{
-			ICharReader reader;
-
-			reader = new StringCharReader("Welcome");
-			Assert.AreEqual(0, reader.Position);
-			Assert.AreEqual('W', reader.Pop());
+			Assert.AreEqual('W', reader.Read());
 			Assert.AreEqual(1, reader.Position);
-			Assert.AreEqual('e', reader.Peek());
-			Assert.AreEqual(1, reader.Position);
-		}
-
-		[TestMethod]
-		public void ShouldPopCharacters()
-		{
-			ICharReader reader;
-
-			reader = new StringCharReader("Welcome");
-			Assert.AreEqual(0, reader.Position);
-			Assert.AreEqual('W', reader.Pop());
-			Assert.AreEqual(1, reader.Position);
-			Assert.AreEqual('e', reader.Pop());
+			Assert.AreEqual('e', reader.Read());
 			Assert.AreEqual(2, reader.Position);
-			Assert.AreEqual('l', reader.Pop());
+			Assert.AreEqual('l', reader.Read());
 			Assert.AreEqual(3, reader.Position);
-			Assert.AreEqual('c', reader.Pop());
+			Assert.AreEqual('c', reader.Read());
 			Assert.AreEqual(4, reader.Position);
-			Assert.AreEqual('o', reader.Pop());
+			Assert.AreEqual('o', reader.Read());
 			Assert.AreEqual(5, reader.Position);
-			Assert.AreEqual('m', reader.Pop());
+			Assert.AreEqual('m', reader.Read());
 			Assert.AreEqual(6, reader.Position);
-			Assert.AreEqual('e', reader.Pop());
+			Assert.AreEqual('e', reader.Read());
 			Assert.AreEqual(7, reader.Position);
 		}
 		[TestMethod]
@@ -73,73 +47,36 @@ namespace LexerLib.UnitTest
 
 			reader = new StringCharReader("Welcome");
 			Assert.IsFalse(reader.EOF);
-			Assert.AreEqual('W', reader.Pop());
+			Assert.AreEqual('W', reader.Read());
 			Assert.IsFalse(reader.EOF);
-			Assert.AreEqual('e', reader.Pop());
+			Assert.AreEqual('e', reader.Read());
 			Assert.IsFalse(reader.EOF);
-			Assert.AreEqual('l', reader.Pop());
+			Assert.AreEqual('l', reader.Read());
 			Assert.IsFalse(reader.EOF);
-			Assert.AreEqual('c', reader.Pop());
+			Assert.AreEqual('c', reader.Read());
 			Assert.IsFalse(reader.EOF);
-			Assert.AreEqual('o', reader.Pop());
+			Assert.AreEqual('o', reader.Read());
 			Assert.IsFalse(reader.EOF);
-			Assert.AreEqual('m', reader.Pop());
+			Assert.AreEqual('m', reader.Read());
 			Assert.IsFalse(reader.EOF);
-			Assert.AreEqual('e', reader.Pop());
+			Assert.AreEqual('e', reader.Read());
 			Assert.IsTrue(reader.EOF);
 		}
 		[TestMethod]
-		public void ShouldPeekAndPop()
+		public void ShouldReadAndSeel()
 		{
 			ICharReader reader;
 
 			reader = new StringCharReader("Welcome");
-			Assert.AreEqual('W', reader.Peek());
-			Assert.AreEqual('W', reader.Pop());
-			Assert.AreEqual('e', reader.Peek());
-			Assert.AreEqual('e', reader.Pop());
-			Assert.AreEqual('l', reader.Peek());
-			Assert.AreEqual('l', reader.Pop());
-			Assert.AreEqual('c', reader.Peek());
-			Assert.AreEqual('c', reader.Pop());
-			Assert.AreEqual('o', reader.Peek());
-			Assert.AreEqual('o', reader.Pop());
-			Assert.AreEqual('m', reader.Peek());
-			Assert.AreEqual('m', reader.Pop());
-			Assert.AreEqual('e', reader.Peek());
-			Assert.AreEqual('e', reader.Pop());
+			Assert.AreEqual('W', reader.Read());
+			Assert.AreEqual('e', reader.Read());
+			Assert.AreEqual('l', reader.Read());
+			reader.Seek(0);
+			Assert.AreEqual('W', reader.Read());
+			Assert.AreEqual('e', reader.Read());
+			Assert.AreEqual('l', reader.Read());
 		}
 
-		[TestMethod]
-		public void ShouldNotPopCharacterAtEOF()
-		{
-			ICharReader reader;
-
-			reader = new StringCharReader("Welcome");
-			Assert.AreEqual('W', reader.Pop());
-			Assert.AreEqual('e', reader.Pop());
-			Assert.AreEqual('l', reader.Pop());
-			Assert.AreEqual('c', reader.Pop());
-			Assert.AreEqual('o', reader.Pop());
-			Assert.AreEqual('m', reader.Pop());
-			Assert.AreEqual('e', reader.Pop());
-			Assert.ThrowsException<System.IO.EndOfStreamException>(() => reader.Pop());
-		}
-		[TestMethod]
-		public void ShouldNotPeekCharacterAtEOF()
-		{
-			ICharReader reader;
-
-			reader = new StringCharReader("Welcome");
-			Assert.AreEqual('W', reader.Pop());
-			Assert.AreEqual('e', reader.Pop());
-			Assert.AreEqual('l', reader.Pop());
-			Assert.AreEqual('c', reader.Pop());
-			Assert.AreEqual('o', reader.Pop());
-			Assert.AreEqual('m', reader.Pop());
-			Assert.AreEqual('e', reader.Pop());
-			Assert.ThrowsException<System.IO.EndOfStreamException>(() => reader.Peek());
-		}
 
 
 	}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,15 +21,17 @@ namespace LexerLib.UnitTest.Mocks
 		}
 
 		
-		public char Peek()
-		{
-			return value[index];
-		}
+		
 
-		public char Pop()
+		public char Read()
 		{
+			if (index == value.Length) throw new EndOfStreamException();
 			return value[index++];
 		}
 
+		public void Seek(long Position)
+		{
+			this.index = (int)Position;
+		}
 	}
 }

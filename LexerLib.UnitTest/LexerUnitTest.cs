@@ -201,7 +201,40 @@ namespace LexerLib.UnitTest
 			Assert.AreEqual("toke", token.Value);
 
 		}
+		[TestMethod]
+		public void ShouldReadAndSeek()
+		{
+			ICharReader reader;
+			ILexer lexer;
+			Rule letter, word;
+			Token token;
 
+			reader = new MockedCharReader("abcde");
+
+			word = new Rule("Word", Parse.Characters("abcdef"));
+			letter = new Rule("Letter", Parse.CharacterRange('a','z'));
+
+			lexer = new Lexer(word, letter);
+
+			token = lexer.Read(reader);
+			Assert.AreEqual("Letter", token.Class);
+			Assert.AreEqual("a", token.Value);
+			token = lexer.Read(reader);
+			Assert.AreEqual("Letter", token.Class);
+			Assert.AreEqual("b", token.Value);
+			token = lexer.Read(reader);
+			Assert.AreEqual("Letter", token.Class);
+			Assert.AreEqual("c", token.Value);
+			token = lexer.Read(reader);
+			Assert.AreEqual("Letter", token.Class);
+			Assert.AreEqual("d", token.Value);
+			token = lexer.Read(reader);
+			Assert.AreEqual("Letter", token.Class);
+			Assert.AreEqual("e", token.Value);
+			
+
+
+		}
 
 
 	}

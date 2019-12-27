@@ -24,17 +24,18 @@ namespace LexerLib
 		}
 
 		
-		public char Peek()
-		{
-			if (EOF) throw new EndOfStreamException();
-			return value[position];
-		}
 
-		public char Pop()
+		public char Read()
 		{
 			if (EOF) throw new EndOfStreamException();
 			return value[position++];
 		}
+
+		public void Seek(long Position)
+		{
+			this.position = (int)Position;
+		}
+
 
 	}
 }
