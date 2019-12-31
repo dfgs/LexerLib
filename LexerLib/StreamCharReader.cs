@@ -10,28 +10,60 @@ namespace LexerLib
 	public class StreamCharReader : ICharReader
 	{
 		private BinaryReader reader;
+		private char[] buffer;
+
 		
-		public bool EOF => reader.BaseStream.Position==reader.BaseStream.Length;
+		private long bufferPosition;
+		private int bufferSize;
+		private int actualBufferSize;
+		private int bufferIndex;
 
-		public long Position => reader.BaseStream.Position;
+		// reader.BaseStream.Length is very long to get. It is recommanded to cache this value
+		private long length;
+		public bool EOF => Position==length;
+
+		public long Position => bufferPosition+bufferIndex;
 
 
-		public StreamCharReader(Stream Stream,Encoding Encoding)
+		public StreamCharReader(Stream Stream,Encoding Encoding,int BufferSize=65536)
 		{
 			if (Stream == null) throw new ArgumentNullException("Stream");
 			if (Encoding == null) throw new ArgumentNullException("Encoding");
+			if (BufferSize<=0) throw new ArgumentOutOfRangeException("BufferSize");
 			this.reader = new BinaryReader(Stream,Encoding);
+			this.length = reader.BaseStream.Length;
+			this.bufferSize = BufferSize;
 		}
 
+		private void ReadBuffer()
+		{
+			bufferIndex = 0;
+			bufferPosition = reader.BaseStream.Position;
+			buffer = reader.ReadChars(bufferSize);
+			actualBufferSize = buffer.Length;
+		}
 
 		public char Read()
 		{
-			return reader.ReadChar();
+			char result;
+
+			if (bufferIndex>=actualBufferSize) ReadBuffer();
+			
+			result = buffer[bufferIndex++];
+			return result;
 		}
 
 		public void Seek(long Position)
 		{
-			reader.BaseStream.Seek(Position,SeekOrigin.Begin);
+			if ((Position >= bufferPosition) && (Position <= bufferPosition + actualBufferSize))
+			{
+				bufferIndex = (int)(Position - bufferPosition);
+			}
+			else
+			{
+				reader.BaseStream.Seek(Position, SeekOrigin.Begin);
+				ReadBuffer();
+			}
 		}
 
 	}
