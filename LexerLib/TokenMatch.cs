@@ -18,5 +18,12 @@ namespace LexerLib
 			get;
 			set;
 		}
+
+		public Tag[] Tags
+		{
+			get;
+			set;
+		}
+
 	}
 }

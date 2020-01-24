@@ -43,8 +43,9 @@ namespace LexerLib
 			IState currentState;
 			StringBuilder sb;
 			IRule reductionRule;
-			Token lastGoodToken=new Token();
+			string lastGoodValue=null;
 			long lastGoodPosition=0;
+			IRule lastGoodRule=null;
 			TokenMatch result;
 
 			if (Reader == null) throw new ArgumentNullException("Reader");
@@ -78,7 +79,8 @@ namespace LexerLib
 				if (reductionRule != null)
 				{
 					lastGoodPosition = Reader.Position;
-					lastGoodToken = new Token(reductionRule.Name, sb.ToString());
+					lastGoodRule = reductionRule;
+					lastGoodValue = sb.ToString();
 				}
 			}
 
@@ -86,7 +88,8 @@ namespace LexerLib
 
 			result = new TokenMatch();
 			result.Success = true;
-			result.Token = lastGoodToken;
+			result.Token = new Token(lastGoodRule.Name,lastGoodValue);
+			result.Tags = lastGoodRule.Tags.ToArray();
 			return result;
 		}
 
@@ -98,8 +101,9 @@ namespace LexerLib
 			StringBuilder sb;
 			IRule reductionRule;
 			long lastGoodPosition = 0;
+			IRule lastGoodRule = null;
+			string lastGoodValue = null;
 			TokenMatch result;
-			Token token=new Token();
 
 			if (Reader == null) throw new ArgumentNullException("Reader");
 
@@ -110,7 +114,7 @@ namespace LexerLib
 			{
 				if (Reader.EOF)
 				{
-					if (lastGoodPosition == 0) token = new Token(null, sb.ToString());
+					if (lastGoodPosition == 0) lastGoodValue = sb.ToString();
 					break;
 				}
 				else
@@ -123,7 +127,7 @@ namespace LexerLib
 
 				if (index == null)
 				{
-					if (lastGoodPosition == 0) token = new Token(null, sb.ToString());
+					if (lastGoodPosition == 0) lastGoodValue = sb.ToString();
 					break;
 				}
 
@@ -133,19 +137,24 @@ namespace LexerLib
 				if (reductionRule != null)
 				{
 					lastGoodPosition = Reader.Position;
-					token = new Token(reductionRule.Name, sb.ToString());
+					lastGoodRule = reductionRule;
+					lastGoodValue=sb.ToString();
 				}
 			}
 
 			result = new TokenMatch();
-			if (token.Class != null)
+			if (lastGoodRule != null)
 			{
 				result.Success = true;
+				result.Tags = lastGoodRule.Tags.ToArray();
+				result.Token = new Token(lastGoodRule.Name, lastGoodValue);
 				Reader.Seek(lastGoodPosition);
 			}
-			result.Token = token;
+			else
+			{
+				result.Token = new Token(null, lastGoodValue);
+			}
 
-			
 			return result;
 		}
 
