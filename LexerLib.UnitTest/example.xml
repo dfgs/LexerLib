@@ -1,5 +1,9 @@
 <?xml version="1.0"?>
 <Rule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="RuleA">
+	<Tags>
+		<Tag Name="TagName1" Value="TagValue1"/>
+		<Tag Name="TagName2" Value="TagValue2"/>
+	</Tags>
   <Predicate xsi:type="Sequence">
     <Items>
       <Predicate xsi:type="OneOrMoreTimes">

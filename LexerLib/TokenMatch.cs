@@ -1,5 +1,4 @@
-﻿using LexerLib.Predicates;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,21 +6,17 @@ using System.Threading.Tasks;
 
 namespace LexerLib
 {
-	public interface IRule
+	public class TokenMatch
 	{
-		string Name
+		public bool Success
 		{
 			get;
 			set;
 		}
-		IPredicate Predicate
+		public Token Token
 		{
 			get;
-		}
-
-		IEnumerable<Tag> Tags
-		{
-			get;
+			set;
 		}
 	}
 }

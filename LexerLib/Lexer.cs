@@ -36,7 +36,7 @@ namespace LexerLib
 
 
 
-		public Token Read(ICharReader Reader)
+		public TokenMatch Read(ICharReader Reader)
 		{
 			char input;
 			int? index = 0;
@@ -45,6 +45,7 @@ namespace LexerLib
 			string _class;
 			Token lastGoodToken=new Token();
 			long lastGoodPosition=0;
+			TokenMatch result;
 
 			if (Reader == null) throw new ArgumentNullException("Reader");
 
@@ -82,10 +83,14 @@ namespace LexerLib
 			}
 
 			Reader.Seek(lastGoodPosition);
-			return lastGoodToken;
+
+			result = new TokenMatch();
+			result.Success = true;
+			result.Token = lastGoodToken;
+			return result;
 		}
 
-		public bool TryRead(ICharReader Reader,out Token Token)
+		public TokenMatch TryRead(ICharReader Reader)
 		{
 			char input;
 			int? index = 0;
@@ -93,10 +98,11 @@ namespace LexerLib
 			StringBuilder sb;
 			string _class;
 			long lastGoodPosition = 0;
+			TokenMatch result;
+			Token token=new Token();
 
 			if (Reader == null) throw new ArgumentNullException("Reader");
 
-			Token = new Token();
 			sb = new StringBuilder();
 
 			currentState = states[0];
@@ -104,7 +110,7 @@ namespace LexerLib
 			{
 				if (Reader.EOF)
 				{
-					if (lastGoodPosition == 0) Token = new Token(null, sb.ToString());
+					if (lastGoodPosition == 0) token = new Token(null, sb.ToString());
 					break;
 				}
 				else
@@ -117,7 +123,7 @@ namespace LexerLib
 
 				if (index == null)
 				{
-					if (lastGoodPosition == 0) Token = new Token(null, sb.ToString());
+					if (lastGoodPosition == 0) token = new Token(null, sb.ToString());
 					break;
 				}
 
@@ -127,19 +133,20 @@ namespace LexerLib
 				if (_class != null)
 				{
 					lastGoodPosition = Reader.Position;
-					Token = new Token(_class, sb.ToString());
+					token = new Token(_class, sb.ToString());
 				}
 			}
 
-			if (Token.Class==null)
+			result = new TokenMatch();
+			if (token.Class != null)
 			{
-				int t = 0;
-			}
-			else
-			{
+				result.Success = true;
 				Reader.Seek(lastGoodPosition);
 			}
-			return Token.Class!=null;
+			result.Token = token;
+
+			
+			return result;
 		}
 
 

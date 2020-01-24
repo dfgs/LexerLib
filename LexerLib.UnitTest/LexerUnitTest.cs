@@ -22,7 +22,7 @@ namespace LexerLib.UnitTest
 			ICharReader reader;
 			ILexer lexer;
 			Rule number, word;
-			Token token;
+			TokenMatch tokenMatch;
 
 			reader = new MockedCharReader("12345abc");
 
@@ -31,13 +31,14 @@ namespace LexerLib.UnitTest
 
 			lexer = new Lexer( word, number);
 
-			token = lexer.Read(reader);
-			Assert.AreEqual("Number", token.Class);
-			Assert.AreEqual("12345", token.Value);
+			tokenMatch = lexer.Read(reader);
+			Assert.IsTrue(tokenMatch.Success);
+			Assert.AreEqual("Number", tokenMatch.Token.Class);
+			Assert.AreEqual("12345", tokenMatch.Token.Value);
 
-			token = lexer.Read(reader);
-			Assert.AreEqual("Word", token.Class);
-			Assert.AreEqual("abc", token.Value);
+			tokenMatch = lexer.Read(reader);
+			Assert.AreEqual("Word", tokenMatch.Token.Class);
+			Assert.AreEqual("abc", tokenMatch.Token.Value);
 		}
 
 		[TestMethod]
@@ -46,8 +47,7 @@ namespace LexerLib.UnitTest
 			ICharReader reader;
 			ILexer lexer;
 			Rule number, word;
-			Token token;
-			bool result;
+			TokenMatch tokenMatch;
 
 			reader = new MockedCharReader("12345abc");
 
@@ -56,15 +56,15 @@ namespace LexerLib.UnitTest
 
 			lexer = new Lexer( word, number);
 
-			result= lexer.TryRead(reader, out token);
-			Assert.IsTrue(result);
-			Assert.AreEqual("Number", token.Class);
-			Assert.AreEqual("12345", token.Value);
+			tokenMatch = lexer.TryRead(reader);
+			Assert.IsTrue(tokenMatch.Success);
+			Assert.AreEqual("Number", tokenMatch.Token.Class);
+			Assert.AreEqual("12345", tokenMatch.Token.Value);
 
-			result = lexer.TryRead(reader, out token);
-			Assert.IsTrue(result);
-			Assert.AreEqual("Word", token.Class);
-			Assert.AreEqual("abc", token.Value);
+			tokenMatch = lexer.TryRead(reader);
+			Assert.IsTrue(tokenMatch.Success);
+			Assert.AreEqual("Word", tokenMatch.Token.Class);
+			Assert.AreEqual("abc", tokenMatch.Token.Value);
 
 			
 		}
@@ -88,13 +88,13 @@ namespace LexerLib.UnitTest
 		{
 			ILexer lexer;
 			Rule number, word;
-			Token token;
+			TokenMatch tokenMatch;
 
 			number = new Rule("Number", Parse.Character('0').OrCharacter('1').OrCharacter('2').OrCharacter('3').OrCharacter('4').OrCharacter('5').OrCharacter('6').OrCharacter('7').OrCharacter('8').OrCharacter('9').OneOrMoreTimes());
 			word = new Rule("Word", Parse.Character('a').OrCharacter('b').OrCharacter('c').OrCharacter('d').OneOrMoreTimes());
 
 			lexer = new Lexer(word, number);
-			Assert.ThrowsException<ArgumentNullException>(() => lexer.TryRead(null,out token));
+			Assert.ThrowsException<ArgumentNullException>(() => tokenMatch=lexer.TryRead(null));
 
 		}
 
@@ -104,7 +104,7 @@ namespace LexerLib.UnitTest
 			ICharReader reader;
 			ILexer lexer;
 			Rule word;
-			Token token;
+			TokenMatch tokenMatch;
 
 
 			word = new Rule("Word", Parse.Characters("token"));
@@ -112,14 +112,15 @@ namespace LexerLib.UnitTest
 			reader = new MockedCharReader("token");
 			lexer = new Lexer( word);
 
-			token = lexer.Read(reader);
-			Assert.AreEqual("Word", token.Class);
-			Assert.AreEqual("token", token.Value);
+			tokenMatch = lexer.Read(reader);
+			Assert.IsTrue(tokenMatch.Success);
+			Assert.AreEqual("Word", tokenMatch.Token.Class);
+			Assert.AreEqual("token", tokenMatch.Token.Value);
 
 			reader = new MockedCharReader("toke");
 			lexer = new Lexer(word);
 
-			Assert.ThrowsException<EndOfStreamException>( ()=>lexer.Read(reader) );
+			Assert.ThrowsException<EndOfStreamException>( ()=> tokenMatch=lexer.Read(reader) );
 		}
 		[TestMethod]
 		public void ShouldFailToReadAndThrowInvalidInputException()
@@ -127,7 +128,7 @@ namespace LexerLib.UnitTest
 			ICharReader reader;
 			ILexer lexer;
 			Rule word;
-			Token token;
+			TokenMatch tokenMatch;
 			InvalidInputException ex;
 
 			word = new Rule("Word", Parse.Characters("token"));
@@ -135,14 +136,15 @@ namespace LexerLib.UnitTest
 			reader = new MockedCharReader("token");
 			lexer = new Lexer( word);
 
-			token = lexer.Read(reader);
-			Assert.AreEqual("Word", token.Class);
-			Assert.AreEqual("token", token.Value);
+			tokenMatch = lexer.Read(reader);
+			Assert.IsTrue(tokenMatch.Success);
+			Assert.AreEqual("Word", tokenMatch.Token.Class);
+			Assert.AreEqual("token", tokenMatch.Token.Value);
 
 			reader = new MockedCharReader("toked");
 			lexer = new Lexer( word);
 
-			ex=Assert.ThrowsException<InvalidInputException>(() => lexer.Read(reader));
+			ex=Assert.ThrowsException<InvalidInputException>(() => tokenMatch=lexer.Read(reader));
 			Assert.AreEqual('d', ex.Input);
 		}
 		[TestMethod]
@@ -151,26 +153,25 @@ namespace LexerLib.UnitTest
 			ICharReader reader;
 			ILexer lexer;
 			Rule word;
-			Token token;
-			bool result;
+			TokenMatch tokenMatch;
 
 			word = new Rule("Word", Parse.Characters("token"));
 
 			reader = new MockedCharReader("token");
 			lexer = new Lexer( word);
 
-			result = lexer.TryRead(reader,out token);
-			Assert.IsTrue(result);
-			Assert.AreEqual("Word", token.Class);
-			Assert.AreEqual("token", token.Value);
+			tokenMatch = lexer.TryRead(reader);
+			Assert.IsTrue(tokenMatch.Success);
+			Assert.AreEqual("Word", tokenMatch.Token.Class);
+			Assert.AreEqual("token", tokenMatch.Token.Value);
 
 			reader = new MockedCharReader("toke");
 			lexer = new Lexer( word);
-			
-			result = lexer.TryRead(reader,out token);
-			Assert.IsFalse(result);
-			Assert.IsNull(token.Class);
-			Assert.AreEqual("toke", token.Value);
+
+			tokenMatch = lexer.TryRead(reader);
+			Assert.IsFalse(tokenMatch.Success);
+			Assert.IsNull(tokenMatch.Token.Class);
+			Assert.AreEqual("toke", tokenMatch.Token.Value);
 
 		}
 		[TestMethod]
@@ -179,26 +180,25 @@ namespace LexerLib.UnitTest
 			ICharReader reader;
 			ILexer lexer;
 			Rule word;
-			Token token;
-			bool result;
+			TokenMatch tokenMatch;
 
 			word = new Rule("Word", Parse.Characters("token"));
 
 			reader = new MockedCharReader("token");
 			lexer = new Lexer(word);
 
-			result = lexer.TryRead(reader,out token);
-			Assert.IsTrue(result);
-			Assert.AreEqual("Word", token.Class);
-			Assert.AreEqual("token", token.Value);
+			tokenMatch = lexer.TryRead(reader);
+			Assert.IsTrue(tokenMatch.Success);
+			Assert.AreEqual("Word", tokenMatch.Token.Class);
+			Assert.AreEqual("token", tokenMatch.Token.Value);
 
 			reader = new MockedCharReader("toked");
 			lexer = new Lexer(word);
 
-			result = lexer.TryRead(reader,out token);
-			Assert.IsFalse(result);
-			Assert.IsNull(token.Class);
-			Assert.AreEqual("toked", token.Value);
+			tokenMatch = lexer.TryRead(reader);
+			Assert.IsFalse(tokenMatch.Success);
+			Assert.IsNull(tokenMatch.Token.Class);
+			Assert.AreEqual("toked", tokenMatch.Token.Value);
 
 		}
 		[TestMethod]
@@ -207,26 +207,25 @@ namespace LexerLib.UnitTest
 			ICharReader reader;
 			ILexer lexer;
 			Rule word;
-			Token token;
-			bool result;
+			TokenMatch tokenMatch;
 
 			word = new Rule("Word", Parse.Characters("token"));
 
 			reader = new MockedCharReader("token");
 			lexer = new Lexer(word);
 
-			result = lexer.TryRead(reader, out token);
-			Assert.IsTrue(result);
-			Assert.AreEqual("Word", token.Class);
-			Assert.AreEqual("token", token.Value);
+			tokenMatch = lexer.TryRead(reader);
+			Assert.IsTrue(tokenMatch.Success);
+			Assert.AreEqual("Word", tokenMatch.Token.Class);
+			Assert.AreEqual("token", tokenMatch.Token.Value);
 
 			reader = new MockedCharReader(",oken");
 			lexer = new Lexer(word);
 
-			result = lexer.TryRead(reader, out token);
-			Assert.IsFalse(result);
-			Assert.IsNull(token.Class);
-			Assert.AreEqual(",", token.Value);
+			tokenMatch = lexer.TryRead(reader);
+			Assert.IsFalse(tokenMatch.Success);
+			Assert.IsNull(tokenMatch.Token.Class);
+			Assert.AreEqual(",", tokenMatch.Token.Value);
 
 		}
 		[TestMethod]
@@ -235,7 +234,7 @@ namespace LexerLib.UnitTest
 			ICharReader reader;
 			ILexer lexer;
 			Rule letter, word;
-			Token token;
+			TokenMatch tokenMatch;
 
 			reader = new MockedCharReader("abcde");
 
@@ -244,21 +243,21 @@ namespace LexerLib.UnitTest
 
 			lexer = new Lexer(word, letter);
 
-			token = lexer.Read(reader);
-			Assert.AreEqual("Letter", token.Class);
-			Assert.AreEqual("a", token.Value);
-			token = lexer.Read(reader);
-			Assert.AreEqual("Letter", token.Class);
-			Assert.AreEqual("b", token.Value);
-			token = lexer.Read(reader);
-			Assert.AreEqual("Letter", token.Class);
-			Assert.AreEqual("c", token.Value);
-			token = lexer.Read(reader);
-			Assert.AreEqual("Letter", token.Class);
-			Assert.AreEqual("d", token.Value);
-			token = lexer.Read(reader);
-			Assert.AreEqual("Letter", token.Class);
-			Assert.AreEqual("e", token.Value);
+			tokenMatch = lexer.Read(reader);
+			Assert.AreEqual("Letter", tokenMatch.Token.Class);
+			Assert.AreEqual("a", tokenMatch.Token.Value);
+			tokenMatch = lexer.Read(reader);
+			Assert.AreEqual("Letter", tokenMatch.Token.Class);
+			Assert.AreEqual("b", tokenMatch.Token.Value);
+			tokenMatch = lexer.Read(reader);
+			Assert.AreEqual("Letter", tokenMatch.Token.Class);
+			Assert.AreEqual("c", tokenMatch.Token.Value);
+			tokenMatch = lexer.Read(reader);
+			Assert.AreEqual("Letter", tokenMatch.Token.Class);
+			Assert.AreEqual("d", tokenMatch.Token.Value);
+			tokenMatch = lexer.Read(reader);
+			Assert.AreEqual("Letter", tokenMatch.Token.Class);
+			Assert.AreEqual("e", tokenMatch.Token.Value);
 			
 
 

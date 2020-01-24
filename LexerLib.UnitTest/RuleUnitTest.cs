@@ -40,6 +40,7 @@ namespace LexerLib.UnitTest
 			ruleA = new Rule();
 			ruleA.Name = "RuleA";
 			ruleA.Predicate = Parse.Character('a').OneOrMoreTimes();
+			ruleA.Tags.Add(new Tag("A","B"));
 
 			using (stream = new MemoryStream())
 			{
@@ -51,6 +52,8 @@ namespace LexerLib.UnitTest
 
 			Assert.IsNotNull(ruleB);
 			Assert.AreEqual(ruleA.Name, ruleB.Name);
+			Assert.IsNotNull(ruleB.Predicate);
+			Assert.AreEqual(1,ruleB.Tags.Count);
 		}
 
 		[TestMethod]
@@ -70,6 +73,12 @@ namespace LexerLib.UnitTest
 
 			Assert.IsNotNull(ruleA);
 			Assert.IsInstanceOfType(ruleA.Predicate, typeof(Sequence));
+			Assert.AreEqual(2, ruleA.Tags.Count);
+			Assert.AreEqual("TagName1", ruleA.Tags[0].Name);
+			Assert.AreEqual("TagValue1", ruleA.Tags[0].Value);
+			Assert.AreEqual("TagName2", ruleA.Tags[1].Name);
+			Assert.AreEqual("TagValue2", ruleA.Tags[1].Value);
+
 		}
 
 

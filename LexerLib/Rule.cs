@@ -34,17 +34,29 @@ namespace LexerLib
             set;
         }
 
+        [XmlIgnore]
+        IEnumerable<Tag> IRule.Tags=> Tags;
+
+
+        public List<Tag> Tags
+        {
+            get;
+            set;
+        }
+
+
         public Rule()
         {
-
+            this.Tags = new List<Tag>();
         }
         public Rule(string Name,Predicate Predicate)
         {
             this.Name = Name;
             this.Predicate = Predicate;
+            this.Tags = new List<Tag>();
         }
 
-       
+
 
     }
 }

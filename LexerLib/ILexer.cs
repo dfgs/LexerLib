@@ -8,7 +8,7 @@ namespace LexerLib
 {
 	public interface ILexer
 	{
-		Token Read(ICharReader Reader);
-		bool TryRead(ICharReader Reader,out Token Token);
+		TokenMatch Read(ICharReader Reader);
+		TokenMatch TryRead(ICharReader Reader);
 	}
 }
