@@ -8,13 +8,13 @@ namespace LexerLib.Automatons
 {
 	public interface IState
 	{
-		IEnumerable<string> Reductions
+		IEnumerable<IRule> Reductions
 		{
 			get;
 		}
 
 		void CreateShift(char Input, int NextStateIndex);
-		void CreateReduction(string Reduction);
+		void CreateReduction(IRule Rule);
 		int? GetNextStateIndex(char Input);
 	}
 }

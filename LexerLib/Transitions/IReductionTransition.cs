@@ -8,7 +8,7 @@ namespace LexerLib.Transitions
 {
 	public interface IReductionTransition:ITransition
 	{
-		string Name
+		IRule Rule
 		{
 			get;
 		}

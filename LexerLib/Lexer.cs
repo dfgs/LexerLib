@@ -42,7 +42,7 @@ namespace LexerLib
 			int? index = 0;
 			IState currentState;
 			StringBuilder sb;
-			string _class;
+			IRule reductionRule;
 			Token lastGoodToken=new Token();
 			long lastGoodPosition=0;
 			TokenMatch result;
@@ -74,11 +74,11 @@ namespace LexerLib
 				sb.Append(input);
 				currentState = states[index.Value];
 
-				_class = currentState.Reductions.FirstOrDefault();
-				if (_class != null)
+				reductionRule = currentState.Reductions.FirstOrDefault();
+				if (reductionRule != null)
 				{
 					lastGoodPosition = Reader.Position;
-					lastGoodToken = new Token(_class, sb.ToString());
+					lastGoodToken = new Token(reductionRule.Name, sb.ToString());
 				}
 			}
 
@@ -96,7 +96,7 @@ namespace LexerLib
 			int? index = 0;
 			IState currentState;
 			StringBuilder sb;
-			string _class;
+			IRule reductionRule;
 			long lastGoodPosition = 0;
 			TokenMatch result;
 			Token token=new Token();
@@ -129,11 +129,11 @@ namespace LexerLib
 
 				currentState = states[index.Value];
 
-				_class = currentState.Reductions.FirstOrDefault();
-				if (_class != null)
+				reductionRule = currentState.Reductions.FirstOrDefault();
+				if (reductionRule != null)
 				{
 					lastGoodPosition = Reader.Position;
-					token = new Token(_class, sb.ToString());
+					token = new Token(reductionRule.Name, sb.ToString());
 				}
 			}
 

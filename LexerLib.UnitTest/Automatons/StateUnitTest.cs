@@ -37,9 +37,9 @@ namespace LexerLib.UnitTest.Automatons
 			state = new State();
 
 			Assert.AreEqual(0, state.Reductions.Count()); ;
-			state.CreateReduction("A");
+			state.CreateReduction(new Rule());
 			Assert.AreEqual(1, state.Reductions.Count()); ;
-			state.CreateReduction("B");
+			state.CreateReduction(new Rule());
 			Assert.AreEqual(2, state.Reductions.Count()); ;
 
 

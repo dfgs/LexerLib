@@ -68,7 +68,7 @@ namespace LexerLib.Automatons
 						{
 							if (transition is IReductionTransition reductionTransition)
 							{
-								currentSituationCollection.State.CreateReduction(reductionTransition.Name);
+								currentSituationCollection.State.CreateReduction(reductionTransition.Rule);
 								continue;
 							}
 							if (transition is IShiftTransition shiftTransition)

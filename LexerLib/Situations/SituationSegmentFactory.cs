@@ -39,7 +39,7 @@ namespace LexerLib.Situations
 			foreach (IRule rule in Rules)
 			{
 				nextSegment = new SituationSegment();
-				nextSegment.InputTransitions.Add(new ReductionTransition(rule.Name));
+				nextSegment.InputTransitions.Add(new ReductionTransition(rule));
 
 				segment = BuildSituationSegment(rule.Predicate, nextSegment);
 				root.Transitions.AddRange(segment.InputTransitions);

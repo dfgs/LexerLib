@@ -18,6 +18,8 @@ namespace LexerLib.UnitTest
 			Stream stream;
 
 			ruleA = new Rule();
+			ruleA.Tags.Add(new Tag("TagName1","TagValue1"));
+			ruleA.Tags.Add(new Tag("TagName2","TagValue2"));
 			ruleA.Name = "RuleA";
 			ruleA.Predicate = Parse.Character('a').OneOrMoreTimes().Then( Parse.AnyCharacter().OrCharacter('b') ).Then(Parse.Character('d').Perhaps());
 

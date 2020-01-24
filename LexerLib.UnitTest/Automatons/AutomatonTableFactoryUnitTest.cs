@@ -24,7 +24,7 @@ namespace LexerLib.UnitTest.Automatons
 				currentState = States[nextIndex.Value];
 			}
 
-			return currentState.Reductions.FirstOrDefault();
+			return currentState.Reductions.FirstOrDefault()?.Name;
 		}
 
 		[TestMethod]

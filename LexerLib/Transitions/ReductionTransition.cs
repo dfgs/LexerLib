@@ -8,7 +8,7 @@ namespace LexerLib.Transitions
 {
 	public class ReductionTransition : Transition, IReductionTransition
 	{
-		public string Name
+		public IRule Rule
 		{
 			get;
 			set;
@@ -18,9 +18,9 @@ namespace LexerLib.Transitions
 
 		}
 
-		public ReductionTransition(string Name)
+		public ReductionTransition(IRule Rule)
 		{
-			this.Name = Name;
+			this.Rule = Rule;
 		}
 
 	}

@@ -10,8 +10,8 @@ namespace LexerLib.Automatons
 	{
 		private int?[] indices;
 
-		private List<string> reductions;
-		public IEnumerable<string> Reductions
+		private List<IRule> reductions;
+		public IEnumerable<IRule> Reductions
 		{
 			get => reductions;
 		}
@@ -20,7 +20,7 @@ namespace LexerLib.Automatons
 		public State()
 		{
 			indices = new int?[65535];
-			reductions = new List<string>();
+			reductions = new List<IRule>();
 		}
 
 
@@ -28,9 +28,9 @@ namespace LexerLib.Automatons
 		{
 			indices[Input] = NextStateIndex;
 		}
-		public void CreateReduction(string Reduction)
+		public void CreateReduction(IRule Rule)
 		{
-			reductions.Add(Reduction);
+			reductions.Add(Rule);
 		}
 
 		public int? GetNextStateIndex(char Input)
