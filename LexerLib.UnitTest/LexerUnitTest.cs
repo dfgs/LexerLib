@@ -198,7 +198,35 @@ namespace LexerLib.UnitTest
 			result = lexer.TryRead(reader,out token);
 			Assert.IsFalse(result);
 			Assert.IsNull(token.Class);
-			Assert.AreEqual("toke", token.Value);
+			Assert.AreEqual("toked", token.Value);
+
+		}
+		[TestMethod]
+		public void ShouldFailToTryReadWhenInvalidCharAtFirstPosition()
+		{
+			ICharReader reader;
+			ILexer lexer;
+			Rule word;
+			Token token;
+			bool result;
+
+			word = new Rule("Word", Parse.Characters("token"));
+
+			reader = new MockedCharReader("token");
+			lexer = new Lexer(word);
+
+			result = lexer.TryRead(reader, out token);
+			Assert.IsTrue(result);
+			Assert.AreEqual("Word", token.Class);
+			Assert.AreEqual("token", token.Value);
+
+			reader = new MockedCharReader(",oken");
+			lexer = new Lexer(word);
+
+			result = lexer.TryRead(reader, out token);
+			Assert.IsFalse(result);
+			Assert.IsNull(token.Class);
+			Assert.AreEqual(",", token.Value);
 
 		}
 		[TestMethod]

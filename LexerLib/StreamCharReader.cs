@@ -66,5 +66,9 @@ namespace LexerLib
 			}
 		}
 
+		public void Dispose()
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

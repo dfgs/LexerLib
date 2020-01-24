@@ -113,13 +113,14 @@ namespace LexerLib
 					index = currentState.GetNextStateIndex(input);
 				}
 
+				sb.Append(input);
+
 				if (index == null)
 				{
 					if (lastGoodPosition == 0) Token = new Token(null, sb.ToString());
 					break;
 				}
 
-				sb.Append(input);
 				currentState = states[index.Value];
 
 				_class = currentState.Reductions.FirstOrDefault();
@@ -130,7 +131,14 @@ namespace LexerLib
 				}
 			}
 
-			Reader.Seek(lastGoodPosition);
+			if (Token.Class==null)
+			{
+				int t = 0;
+			}
+			else
+			{
+				Reader.Seek(lastGoodPosition);
+			}
 			return Token.Class!=null;
 		}
 
