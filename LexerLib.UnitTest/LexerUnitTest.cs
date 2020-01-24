@@ -68,6 +68,74 @@ namespace LexerLib.UnitTest
 
 			
 		}
+
+		[TestMethod]
+		public void ShouldReadWithTags()
+		{
+			ICharReader reader;
+			ILexer lexer;
+			Rule number, word;
+			TokenMatch tokenMatch;
+
+			reader = new MockedCharReader("12345abc");
+
+			number = new Rule("Number", Parse.Character('0').OrCharacter('1').OrCharacter('2').OrCharacter('3').OrCharacter('4').OrCharacter('5').OrCharacter('6').OrCharacter('7').OrCharacter('8').OrCharacter('9').OneOrMoreTimes());
+			number.Tags.Add(new Tag("Number","Value"));
+			word = new Rule("Word", Parse.Character('a').OrCharacter('b').OrCharacter('c').OrCharacter('d').OneOrMoreTimes());
+			word.Tags.Add(new Tag("Word", "Value"));
+
+			lexer = new Lexer(word, number);
+
+			tokenMatch = lexer.Read(reader);
+			Assert.IsTrue(tokenMatch.Success);
+			Assert.AreEqual("Number", tokenMatch.Token.Class);
+			Assert.AreEqual("12345", tokenMatch.Token.Value);
+			Assert.AreEqual(1, tokenMatch.Tags.Length);
+			Assert.AreEqual("Number", tokenMatch.Tags[0].Name);
+
+			tokenMatch = lexer.Read(reader);
+			Assert.AreEqual("Word", tokenMatch.Token.Class);
+			Assert.AreEqual("abc", tokenMatch.Token.Value);
+			Assert.AreEqual(1, tokenMatch.Tags.Length);
+			Assert.AreEqual("Word", tokenMatch.Tags[0].Name);
+
+		}
+
+		[TestMethod]
+		public void ShouldTryReadWithTags()
+		{
+			ICharReader reader;
+			ILexer lexer;
+			Rule number, word;
+			TokenMatch tokenMatch;
+
+			reader = new MockedCharReader("12345abc");
+
+			number = new Rule("Number", Parse.Character('0').OrCharacter('1').OrCharacter('2').OrCharacter('3').OrCharacter('4').OrCharacter('5').OrCharacter('6').OrCharacter('7').OrCharacter('8').OrCharacter('9').OneOrMoreTimes());
+			number.Tags.Add(new Tag("Number", "Value"));
+			word = new Rule("Word", Parse.Character('a').OrCharacter('b').OrCharacter('c').OrCharacter('d').OneOrMoreTimes());
+			word.Tags.Add(new Tag("Word", "Value"));
+
+			lexer = new Lexer(word, number);
+
+			tokenMatch = lexer.TryRead(reader);
+			Assert.IsTrue(tokenMatch.Success);
+			Assert.AreEqual("Number", tokenMatch.Token.Class);
+			Assert.AreEqual("12345", tokenMatch.Token.Value);
+			Assert.AreEqual(1, tokenMatch.Tags.Length);
+			Assert.AreEqual("Number", tokenMatch.Tags[0].Name);
+
+			tokenMatch = lexer.TryRead(reader);
+			Assert.IsTrue(tokenMatch.Success);
+			Assert.AreEqual("Word", tokenMatch.Token.Class);
+			Assert.AreEqual("abc", tokenMatch.Token.Value);
+			Assert.AreEqual(1, tokenMatch.Tags.Length);
+			Assert.AreEqual("Word", tokenMatch.Tags[0].Name);
+
+
+		}
+
+
 		[TestMethod]
 		public void ShouldNotRead()
 		{
