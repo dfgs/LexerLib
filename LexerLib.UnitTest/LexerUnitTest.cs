@@ -35,10 +35,14 @@ namespace LexerLib.UnitTest
 			Assert.IsTrue(tokenMatch.Success);
 			Assert.AreEqual("Number", tokenMatch.Token.Class);
 			Assert.AreEqual("12345", tokenMatch.Token.Value);
+			Assert.IsNotNull(tokenMatch.Tags);
+			Assert.AreEqual(0, tokenMatch.Tags.Length);
 
 			tokenMatch = lexer.Read(reader);
 			Assert.AreEqual("Word", tokenMatch.Token.Class);
 			Assert.AreEqual("abc", tokenMatch.Token.Value);
+			Assert.IsNotNull(tokenMatch.Tags);
+			Assert.AreEqual(0, tokenMatch.Tags.Length);
 		}
 
 		[TestMethod]
@@ -60,13 +64,17 @@ namespace LexerLib.UnitTest
 			Assert.IsTrue(tokenMatch.Success);
 			Assert.AreEqual("Number", tokenMatch.Token.Class);
 			Assert.AreEqual("12345", tokenMatch.Token.Value);
+			Assert.IsNotNull(tokenMatch.Tags);
+			Assert.AreEqual(0, tokenMatch.Tags.Length);
 
 			tokenMatch = lexer.TryRead(reader);
 			Assert.IsTrue(tokenMatch.Success);
 			Assert.AreEqual("Word", tokenMatch.Token.Class);
 			Assert.AreEqual("abc", tokenMatch.Token.Value);
+			Assert.IsNotNull(tokenMatch.Tags);
+			Assert.AreEqual(0, tokenMatch.Tags.Length);
 
-			
+
 		}
 
 		[TestMethod]
@@ -90,12 +98,14 @@ namespace LexerLib.UnitTest
 			Assert.IsTrue(tokenMatch.Success);
 			Assert.AreEqual("Number", tokenMatch.Token.Class);
 			Assert.AreEqual("12345", tokenMatch.Token.Value);
+			Assert.IsNotNull(tokenMatch.Tags);
 			Assert.AreEqual(1, tokenMatch.Tags.Length);
 			Assert.AreEqual("Number", tokenMatch.Tags[0].Name);
 
 			tokenMatch = lexer.Read(reader);
 			Assert.AreEqual("Word", tokenMatch.Token.Class);
 			Assert.AreEqual("abc", tokenMatch.Token.Value);
+			Assert.IsNotNull(tokenMatch.Tags);
 			Assert.AreEqual(1, tokenMatch.Tags.Length);
 			Assert.AreEqual("Word", tokenMatch.Tags[0].Name);
 
@@ -122,6 +132,7 @@ namespace LexerLib.UnitTest
 			Assert.IsTrue(tokenMatch.Success);
 			Assert.AreEqual("Number", tokenMatch.Token.Class);
 			Assert.AreEqual("12345", tokenMatch.Token.Value);
+			Assert.IsNotNull(tokenMatch.Tags);
 			Assert.AreEqual(1, tokenMatch.Tags.Length);
 			Assert.AreEqual("Number", tokenMatch.Tags[0].Name);
 
@@ -129,6 +140,7 @@ namespace LexerLib.UnitTest
 			Assert.IsTrue(tokenMatch.Success);
 			Assert.AreEqual("Word", tokenMatch.Token.Class);
 			Assert.AreEqual("abc", tokenMatch.Token.Value);
+			Assert.IsNotNull(tokenMatch.Tags);
 			Assert.AreEqual(1, tokenMatch.Tags.Length);
 			Assert.AreEqual("Word", tokenMatch.Tags[0].Name);
 

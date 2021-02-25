@@ -12,7 +12,7 @@ namespace LexerLib
 {
 	public class Lexer : ILexer
 	{
-		private IState[] states;
+		private readonly IState[] states;
 		//private ICharReader reader;
 
 		public Lexer( params IRule[] Rules)
@@ -39,7 +39,7 @@ namespace LexerLib
 		public TokenMatch Read(ICharReader Reader)
 		{
 			char input;
-			int? index = 0;
+			int? index ;
 			IState currentState;
 			StringBuilder sb;
 			IRule reductionRule;
@@ -96,7 +96,7 @@ namespace LexerLib
 		public TokenMatch TryRead(ICharReader Reader)
 		{
 			char input;
-			int? index = 0;
+			int? index ;
 			IState currentState;
 			StringBuilder sb;
 			IRule reductionRule;

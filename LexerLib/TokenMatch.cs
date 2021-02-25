@@ -25,5 +25,10 @@ namespace LexerLib
 			set;
 		}
 
+		public TokenMatch()
+		{
+			Tags = new Tag[0];
+		}
+
 	}
 }
